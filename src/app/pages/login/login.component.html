@@ -1,0 +1,36 @@
+<mat-card>
+    <!-- <mat-card-title>Đăng nhập</mat-card-title> -->
+    <mat-card-header>
+      <mat-card-title>Đăng nhập</mat-card-title>
+    </mat-card-header>
+<mat-card-content>
+<form [formGroup]="loginForm">
+  <p>
+    <mat-form-field>
+      <input type="email" formControlName="email" matInput placeholder="Tài khoản">
+    </mat-form-field>
+  </p>
+  <p class="error-text" *ngIf="!loginForm?.controls?.email?.valid && loginForm?.controls?.email?.touched && loginForm?.controls?.email?.errors?.required">
+    Tài khoản là bắt buộc
+  </p>
+
+  <p class="error-text" *ngIf="!loginForm?.controls?.email.valid && loginForm?.controls?.email.touched && loginForm?.controls?.email?.errors?.email">
+    Nhập đúng định dạng email
+  </p>
+  <p>
+    <mat-form-field>
+      <input type="password" formControlName="password" matInput placeholder="mật khẩu">
+    </mat-form-field>
+  </p>
+  <p class="error-text" *ngIf="loginForm?.controls?.password?.touched && !loginForm?.controls?.password?.valid">
+    Mật khẩu là bắt buộc
+  </p>
+  <p class="button">
+    <button type="submit" (click) ="login()" [disabled]='loading' mat-raised-button color="primary">
+      <app-loading-inside-btn *ngIf="loading"></app-loading-inside-btn>
+          {{loading?'':'Đăng nhập'}}
+      </button>
+  </p>
+</form>
+</mat-card-content>
+</mat-card>

@@ -1,0 +1,28 @@
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+
+    <mat-card class="box">
+      <mat-card-header>
+        <mat-card-title>Đổi mật khẩu</mat-card-title>
+      </mat-card-header>
+  
+      <form class="example-form" [formGroup]="changePasswordForm" (submit)="update()">
+        <mat-card-content>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Mật khẩu cũ" formControlName="oldPassword" type="password">
+          </mat-form-field>
+  
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Mật khẩu mới" type="password" formControlName="newPassword">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Nhập lại mật khẩu mới" type="password" formControlName="confirmPassword">
+          </mat-form-field>
+          <button type="submit" mat-raised-button color="primary" [disabled]="loading">
+            <app-loading-inside-btn *ngIf="loading"></app-loading-inside-btn>
+                {{loading?'':'Xác nhận'}}
+            </button>
+        </mat-card-content>
+      </form>
+  
+    </mat-card>
+  </div>

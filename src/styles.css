@@ -1,0 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
+
+.form-container{
+    display: flex;
+    justify-content: flex-start;
+    min-width: 500px;
+    flex-wrap: wrap;
+}
+.form-container .mat-form-field + .mat-form-field{
+    margin: 8px;
+    padding: 8px;
+}
+
+.form-container .mff-1{
+    padding-left: 1%;
+    width: 98%;
+}
+.form-container .mff-2{
+    padding-left: 1%;
+    width: 49%;
+}
+
+
+.form-container .mff-3{
+    padding-left: 1%;
+    width: 32.7%;
+}
+
+.error-text{
+    color: red;
+    font-size: 12px;
+}
