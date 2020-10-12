@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { map } from 'rxjs/operators';
+import { IMenu } from '../../interfaces/menu.interfaces';
 import { HelperService } from '../helper/helper.service';
 @Injectable({
   providedIn: 'root'
@@ -28,12 +29,32 @@ export class FirebaseService {
         };
         data.products = data.products.map(p => {
           p.photos = this.helperService.object2Arr(p.photos);
-          p.catId =  x.payload.key;
+          p.catId = x.payload.key;
           p.catName = x.payload.val().categoryName;
           return p;
         });
         return data;
       });
     }));
+  }
+
+  getProductById(catId, prodId) {
+    return new Promise((resolve, reject) => {
+      return this.db.object(`categories/${catId}/products/${prodId}`).snapshotChanges().subscribe(res => {
+        resolve(res.payload.val());
+      }, err => {
+        reject(err);
+      });
+    });
+  }
+
+  createMenu(menu: IMenu) {
+    const breakfast = this.db.object(`menus/${menu.id}/breakfast`);
+    // const lunch = this.db.object(`menus/${menu.id}/lunch`);
+    // const drinks = this.db.object(`menus/${menu.id}/drinks`);
+
+    for (const item of menu.breakfast) {
+      this.db.object(`menus/${menu.id}/breakfast/${item.id}`).set(item);
+    }
   }
 }

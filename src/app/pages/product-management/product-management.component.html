@@ -1,1 +1,70 @@
-<p>product-management works!</p>
+
+<div class="flex-container">
+    <div class="filter">
+        <mat-form-field>
+            <mat-label>Tìm kiếm</mat-label>
+            <input matInput placeholder="Nhập từ khoá">
+        </mat-form-field>
+    </div>
+    <div class="condition">
+        <mat-form-field [hideRequiredMarker]="false" [floatLabel]="'auto'">
+            <mat-select placeholder="Loại món ăn">
+                <mat-option >Loại món ăn</mat-option>
+                <mat-option *ngFor="let cat of categories" [value]="cat?.key" >{{cat?.categoryName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <!-- <mat-form-field [hideRequiredMarker]="false" [floatLabel]="'auto'">
+            <mat-select placeholder="Nhà cung cấp" [(ngModel)]="filterParams.NhaCungCap">
+                <mat-option >Nhà cung cấp</mat-option>
+                <mat-option *ngFor="let provider of listProvider" [value]="provider?.Id">{{provider?.Ten}}</mat-option>
+            </mat-select>
+        </mat-form-field> -->
+    </div>
+    <div class="action">
+        <button mat-raised-button color="primary" >Thêm</button>
+    </div>
+</div>
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="key">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Mã </th>
+            <td mat-cell *matCellDef="let element;"> {{element?.key}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Tên </th>
+            <td mat-cell *matCellDef="let element;"> {{element?.name}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="displayImage">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ảnh</th>
+            <td mat-cell *matCellDef="let element;let row">
+                <div class="image-container">
+                    <img class="display-image" [src]="element?.displayImage">
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="catName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Loại</th>
+            <td mat-cell *matCellDef="let element;let row"> {{element?.catName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+            <td mat-cell *matCellDef="let element;let row">
+                <mat-icon >delete</mat-icon>
+                <mat-icon >edit</mat-icon>
+            </td>
+
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 20,30,40]" showFirstLastButtons></mat-paginator>
+</div>

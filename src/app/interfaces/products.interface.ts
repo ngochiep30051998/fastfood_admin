@@ -18,10 +18,8 @@ export interface IDiglogData {
     extendData?: any;
 }
 
-export interface IGroupProduct {
-    Id: number;
-    Ma: String;
-    Ten: String;
-    CreatedAt?: string;
-    UpdatedAt?: string;
+export interface ICategories {
+    key?: string;
+    categoryName?: string;
+    product?: IProduct[];
 }

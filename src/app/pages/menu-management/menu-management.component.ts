@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { DateAdapter } from '@angular/material';
+
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-menu-management',
@@ -7,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuManagementComponent implements OnInit {
 
-  constructor() { }
+  date: any;
+  constructor(private _adapter: DateAdapter<any>) { }
 
   ngOnInit() {
   }
 
+  getDate() {
+    const date = moment(this.date).format('DD/MM/YYYY')
+    console.log(date)
+  }
 }

@@ -7,7 +7,7 @@ import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
-import { MatPaginatorIntl, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
+import { DateAdapter, MatPaginatorIntl, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,6 +15,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing';
+import { MomentUtcDateAdapter } from './common/MomentUtcDateAdapter';
 import { ComponentsModule } from './components/components.module';
 import { DemoMaterialModule } from './demo-material-module';
 import { CommonHttpInterceptor } from './interceptor/common.interceptor';
@@ -86,8 +87,9 @@ export function getDutchPaginatorIntl() {
       useClass: CommonHttpInterceptor,
     },
     { provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl() },
-    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: MAT_DATE_LOCALE, useValue: 'vi-vi' },
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+    { provide: DateAdapter, useClass: MomentUtcDateAdapter },
   ],
   bootstrap: [AppComponent]
 })

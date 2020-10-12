@@ -4,12 +4,14 @@ import { LoadingInsideBtnComponent } from './loading-inside-btn/loading-inside-b
 import { DemoMaterialModule } from '../demo-material-module';
 import { OverlayComponent } from './overlay/overlay.component';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { ListProductComponent } from './list-product/list-product.component';
 
 
 @NgModule({
   declarations: [
     LoadingInsideBtnComponent,
-    OverlayComponent
+    OverlayComponent,
+    ListProductComponent
   ],
   imports: [
     CommonModule,
@@ -18,7 +20,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
   ],
   exports: [
     LoadingInsideBtnComponent,
-    OverlayComponent
+    OverlayComponent,
+    ListProductComponent
   ]
 })
 export class ComponentsModule { }
