@@ -7,11 +7,12 @@ import { ComponentsModule } from '../../components/components.module';
 import { DemoMaterialModule } from '../../demo-material-module';
 import { DirectivesModule } from '../../directives/directives.module';
 import { ProductManagementComponent } from './product-management.component';
+import { AddProductComponent } from './add-product/add-product.component';
 
 
 
 @NgModule({
-  declarations: [ProductManagementComponent],
+  declarations: [ProductManagementComponent, AddProductComponent],
   imports: [
     CommonModule,
     DemoMaterialModule,

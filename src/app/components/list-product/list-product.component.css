@@ -19,21 +19,16 @@
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
-    font-size: 14px;
+    font-size: 12px;
   }
 
-  .group-button{
+  .flex-center{
     display: flex;
     justify-content: center;
   }
 
   mat-card-title{
-    /* display: inline-block; */
-    width: 120px;
-    white-space: nowrap;
-    overflow: hidden !important;
-    text-overflow: ellipsis;
-    font-size: 17px !important;
+    font-size: 13px !important;
   }
 
   .add-product{
@@ -50,3 +45,9 @@
   .promotion-price{
     font-size: 13px;
   }
+
+  .unit{
+    font-size: 13px;
+  }
+
+  

@@ -10,6 +10,8 @@ export interface IProduct {
     photos?: IPhoto[];
     price?: number;
     promotionPrice?: string;
+    detail?: string;
+    amount?: number;
 }
 
 export interface IDiglogData {
@@ -22,4 +24,9 @@ export interface ICategories {
     key?: string;
     categoryName?: string;
     product?: IProduct[];
+}
+
+export interface IPopupData {
+    tab: string;
+    menuId: string;
 }

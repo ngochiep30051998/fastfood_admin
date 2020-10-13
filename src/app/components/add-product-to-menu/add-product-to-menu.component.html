@@ -1,0 +1,78 @@
+<div class="flex-end">
+    <mat-icon mat-dialog-close class="pointer">close</mat-icon>
+</div>
+
+<mat-dialog-content>
+
+    <mat-card>
+        <mat-card-title>
+            Thêm sản phẩm
+        </mat-card-title>
+
+        <mat-card-content>
+            <form class="example-form" [formGroup]="form">
+                <mat-form-field [hideRequiredMarker]="false">
+                    <mat-label>Loại sản phẩm</mat-label>
+                    <mat-select placeholder="Loại sản phẩm" formControlName="category">
+                        <mat-option *ngFor="let cat of categories" [value]="cat?.key" (click)="categoryChange(cat?.key)">{{cat?.categoryName}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Tìm kiếm</mat-label>
+                    <input matInput [matAutocomplete]="auto" formControlName="search" placeholder="Nhập tên sản phẩm" (input)="searchProduct($event?.target?.value)">
+                </mat-form-field>
+                <mat-autocomplete #auto="matAutocomplete" class="auto-complete">
+                    <mat-option *ngFor="let product of listProduct;trackBy: trackByFn" (click)="selectProduct(product)">
+                        <span> {{product?.id}}</span> | 
+                        <span> {{product?.name}}</span> | 
+                        <span>{{product?.price}} vnđ</span>
+                    </mat-option>
+                </mat-autocomplete>
+
+                <img mat-card-image class="card-image" *ngIf="imageUrl"
+                    [src]="imageUrl || 'assets/images/defaults/default-product.jpg'"
+                    alt="Photo of a Shiba Inu">
+
+                <mat-form-field class="example-full-width">
+                    <mat-label>Mã sản phẩm</mat-label>
+                    <input matInput placeholder="Mã sản phẩm" [disabled]="true" formControlName="productId">
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width">
+                    <mat-label>Tên sản phẩm</mat-label>
+                    <input matInput placeholder="Tên sản phẩm" [disabled]="true" formControlName="productName">
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width">
+                    <textarea matInput placeholder="Mô tả" matTextareaAutosize matAutosizeMinRows="2" formControlName="detail"
+                        matAutosizeMaxRows="5"></textarea>
+                </mat-form-field>
+
+                <mat-form-field [hideRequiredMarker]="false" [floatLabel]="'auto'">
+                    <mat-label>Đơn giá</mat-label>
+                    <input matInput appInputNumber placeholder="Đơn giá" type="number" formControlName="price">
+                </mat-form-field>
+
+                <mat-form-field [hideRequiredMarker]="false" [floatLabel]="'auto'">
+                    <mat-label>Giá khuyến mại</mat-label>
+                    <input appInputNumber matInput placeholder="Giá khuyến mại" type="number" formControlName="promotionPrice">
+                </mat-form-field>
+
+                <mat-form-field [hideRequiredMarker]="false" [floatLabel]="'auto'">
+                    <mat-label>Số lượng</mat-label>
+                    <input appInputNumber matInput placeholder="Số lượng" type="number" formControlName="amount">
+                </mat-form-field>
+
+            </form>
+        </mat-card-content>
+    </mat-card>
+</mat-dialog-content>
+
+<div class="flex-end">
+    <button mat-raised-button color="primary" (click)="addProductToMenu()" [disabled]='loading'>
+        <app-loading-inside-btn *ngIf="loading"></app-loading-inside-btn>
+        {{loading?'':'Thêm'}}
+    </button>
+
+    <button mat-raised-button color="warn" (click)="resetForm()">Huỷ</button>
+</div>

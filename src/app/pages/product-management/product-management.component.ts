@@ -40,7 +40,6 @@ export class ProductManagementComponent implements OnInit {
       this.listProduct = res.reduce((accumulator, currentValue) => {
         return accumulator.concat(currentValue.products);
       }, []);
-      console.log(this.listProduct)
       this.dataSource.data = this.listProduct;
     });
   }

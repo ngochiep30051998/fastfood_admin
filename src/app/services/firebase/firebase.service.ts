@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { map } from 'rxjs/operators';
 import { IMenu } from '../../interfaces/menu.interfaces';
+import { IProduct } from '../../interfaces/products.interface';
 import { HelperService } from '../helper/helper.service';
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,7 @@ export class FirebaseService {
   getProductById(catId, prodId) {
     return new Promise((resolve, reject) => {
       return this.db.object(`categories/${catId}/products/${prodId}`).snapshotChanges().subscribe(res => {
+        console.log(res)
         resolve(res.payload.val());
       }, err => {
         reject(err);
@@ -48,13 +50,85 @@ export class FirebaseService {
     });
   }
 
-  createMenu(menu: IMenu) {
-    const breakfast = this.db.object(`menus/${menu.id}/breakfast`);
+  async createMultiValuesMenu(menu: IMenu) {
     // const lunch = this.db.object(`menus/${menu.id}/lunch`);
     // const drinks = this.db.object(`menus/${menu.id}/drinks`);
-
-    for (const item of menu.breakfast) {
-      this.db.object(`menus/${menu.id}/breakfast/${item.id}`).set(item);
+    try {
+      if (menu.breakfast) {
+        for (const item of menu.breakfast) {
+          await this.db.object(`menus/${menu.id}/breakfast/${item.id}`).set(item);
+        }
+      }
+      if (menu.lunch) {
+        for (const item of menu.lunch) {
+          await this.db.object(`menus/${menu.id}/lunch/${item.id}`).set(item);
+        }
+      }
+      if (menu.drinks) {
+        for (const item of menu.drinks) {
+          await this.db.object(`menus/${menu.id}/drinks/${item.id}`).set(item);
+        }
+      }
+      return true;
+    } catch (e) {
+      console.log(e);
+      return Promise.reject(e);
     }
+  }
+
+  async createMenu(menuId: string, tab: string, product: IProduct) {
+    try {
+      const exits = await this.checkIsExistProduct(menuId, tab, product);
+      if (!exits) {
+        return this.db.object(`menus/${menuId}/${tab}/${product.id}`).set(product);
+      } else {
+        throw { message: 'Sản phẩm đã tồn tại' };
+      }
+    } catch (e) {
+      console.log(e);
+      return Promise.reject(e);
+    }
+  }
+
+  getMenu(id) {
+    return this.db.object(`/menus/${id}`).snapshotChanges().pipe(
+      map(snap => {
+        const ob = this.helperService.snap2Object(snap);
+        for (const key in ob) {
+          if (ob.hasOwnProperty(key) && key !== 'key') {
+            ob[key] = this.helperService.object2ArrMerge(ob[key])
+            ob[key] = ob[key].map(p => {
+              p.photos = this.helperService.object2Arr(p.photos);
+              return p;
+            });
+          }
+        }
+        return ob;
+      })
+    );
+  }
+
+  getCatById(catId) {
+    return new Promise((resolve, reject) => {
+      return this.db.object(`categories/${catId}`).snapshotChanges().subscribe(res => {
+        resolve(res.payload.val());
+      }, err => {
+        reject(err);
+      });
+    });
+  }
+
+  checkIsExistProduct(menuId: string, tab: string, product: IProduct) {
+    return new Promise((resolve, reject) => {
+      return this.db.object(`menus/${menuId}/${tab}/${product.id}`).valueChanges().subscribe((res) => {
+        if (res) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      }, err => {
+        reject(err);
+      });
+    });
   }
 }

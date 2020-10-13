@@ -1,0 +1,40 @@
+.mat-card {    
+    text-align: -webkit-center;    
+}    
+    
+mat-card {    
+    max-width: 100%;    
+    margin: 0.5em auto;    
+    text-align: center;    
+}    
+    
+mat-toolbar-row {    
+    justify-content: space-between;    
+}    
+    
+.done {    
+    position: fixed;    
+    bottom: 20px;    
+    right: 20px;    
+    color: white;    
+}    
+    
+.content-center {    
+    text-align: -webkit-center;    
+}    
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+
+  .card-image{
+    width: calc(35% + 0px);
+  }
+  .cdk-overlay-2{
+      width: auto !important;
+  }
