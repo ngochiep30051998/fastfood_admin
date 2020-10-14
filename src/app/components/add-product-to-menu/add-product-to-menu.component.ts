@@ -106,7 +106,7 @@ export class AddProductToMenuComponent implements OnInit {
       product.amount = Number(this.form.value.amount);
       product.price = this.form.value.price;
       product.promotionPrice = this.form.value.promotionPrice;
-      product.detail = this.form.value.detail;
+      product.detail = this.form.value.detail || '';
       const params = { ...this.product, ...product };
       const res = await this.firebaseService.createMenu(this.dialogData.menuId, this.dialogData.tab, params);
       console.log(res);

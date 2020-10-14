@@ -2,10 +2,11 @@
 .product-container{
     display: flex;
     flex-wrap: wrap;
+    padding: 10px;
 }
 
 .example-card {
-    max-width: 180px;
+  max-width: 20%;
   }
   
 .example-header-image {
@@ -15,7 +16,7 @@
 
   .detail{
     /* display: inline-block; */
-    width: 120px;
+    width: 154px;
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
@@ -69,4 +70,9 @@
 
 .mat-icon-btn{
   font-size: 13px ;
+}
+.mat-card .mat-card-content {
+  font-size: 0px;
+  line-height: 23px;
+  padding: 7px;
 }

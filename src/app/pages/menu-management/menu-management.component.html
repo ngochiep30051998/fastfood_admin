@@ -20,7 +20,7 @@
 <mat-card>
     <mat-tab-group>
         <mat-tab label="Đồ ăn sáng">
-            <app-list-product [date]="date" [tab]="'breakfast'" [lisProduct]="menu?.breakfast"></app-list-product>
+            <app-list-product *ngIf="menu?.breakfast" [date]="date" [tab]="'breakfast'" [lisProduct]="menu?.breakfast"></app-list-product>
         </mat-tab>
         <mat-tab label="Đồ ăn trưa">
             <app-list-product [date]="date" [tab]="'lunch'" [lisProduct]="menu?.lunch"></app-list-product>

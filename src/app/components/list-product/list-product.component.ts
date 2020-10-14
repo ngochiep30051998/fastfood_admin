@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { MatDialog, PageEvent } from '@angular/material';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import * as moment from 'moment';
@@ -11,17 +11,13 @@ import { AddProductToMenuComponent } from '../add-product-to-menu/add-product-to
   templateUrl: './list-product.component.html',
   styleUrls: ['./list-product.component.css']
 })
-export class ListProductComponent implements OnInit {
+export class ListProductComponent implements OnInit, OnChanges {
   @Input() date: any;
   @Input() tab = 'breakfast';
   @Input() lisProduct: IProduct[] = [];
-  length = 100;
-  pageSize = 10;
-  pageSizeOptions: number[] = [5, 10, 25, 100];
-
-  // MatPaginator Output
-  pageEvent: PageEvent;
-
+  public pageSize = 8;
+  public pageSizeOptions: number[] = [4, 8, 12, 48];
+  public dataSource: IProduct[] = [];
   constructor(
     private firebaseService: FirebaseService,
     public dialog: MatDialog,
@@ -30,6 +26,12 @@ export class ListProductComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngOnChanges(): void {
+    if (this.lisProduct) {
+      // this.pageSize = this.lisProduct.length;
+      this.dataSource = this.lisProduct.slice(0, this.pageSize);
+    }
+  }
   async getProduct() {
     try {
       const catId = '-MIys7i-9MBKrV-OpmBM';
@@ -62,5 +64,14 @@ export class ListProductComponent implements OnInit {
       minHeight: 200,
       autoFocus: false
     });
+  }
+
+  pageChange(event: PageEvent) {
+    const startIndex = event.pageIndex * event.pageSize;
+    let endIndex = startIndex + event.pageSize;
+    if (endIndex > this.lisProduct.length) {
+      endIndex = this.lisProduct.length;
+    }
+    this.dataSource = this.lisProduct.slice(startIndex, endIndex);
   }
 }

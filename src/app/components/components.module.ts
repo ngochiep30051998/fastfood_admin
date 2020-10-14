@@ -10,7 +10,6 @@ import { MatDialogRef, MatFormFieldModule, MAT_DIALOG_DATA } from '@angular/mate
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DirectivesModule } from '../directives/directives.module';
 
-
 @NgModule({
   declarations: [
     LoadingInsideBtnComponent,

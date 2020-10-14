@@ -33,7 +33,7 @@
 
 .block-ellipsis {
     display: inline-block;
-    width: 120px;
+    width: 154px;
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
@@ -47,3 +47,12 @@
   .pointer{
       cursor: pointer;
   }
+  pagination-controls {
+    padding: 10px;
+  
+  }
+
+  pagination-controls .current{
+    background: #52a1a7 !important;
+  }
+  
