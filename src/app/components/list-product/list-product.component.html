@@ -1,13 +1,13 @@
 <div class="product-container">
 
     <mat-card class="example-card" *ngFor="let product of lisProduct">
-        <mat-card-header>
-            <mat-card-title class="product-title block-ellipsis">{{product?.name}}</mat-card-title>
-            <mat-card-subtitle>{{product?.catName}}</mat-card-subtitle>
-        </mat-card-header>
         <img mat-card-image [src]="product?.displayImage || 'assets/images/defaults/default-product.jpg'"
             alt="Photo of a Shiba Inu">
         <mat-card-content>
+            <mat-card-title class="product-title block-ellipsis">{{product?.name}}</mat-card-title>
+            <!-- <mat-card-subtitle>{{product?.catName}}</mat-card-subtitle> -->
+            <mat-card-subtitle>{{product?.detail}}</mat-card-subtitle>
+
             <!-- <p class="detail block-ellipsis">
                 {{product?.detail}}
             </p> -->
@@ -23,10 +23,10 @@
 
             <div class="flex-center">
                 <button mat-mini-fab color="primary">
-                    <mat-icon>edit</mat-icon>
+                    <mat-icon class="mat-icon-btn">edit</mat-icon>
                 </button>
                 <button mat-mini-fab color="warn">
-                    <mat-icon>remove</mat-icon>
+                    <mat-icon class="mat-icon-btn">remove</mat-icon>
                 </button>
             </div>
         </mat-card-content>

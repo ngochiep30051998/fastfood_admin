@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
-import { IMenu } from '../../interfaces/menu.interfaces';
 import { ICategories, IPopupData, IProduct } from '../../interfaces/products.interface';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { HelperService } from '../../services/helper/helper.service';
@@ -107,6 +106,7 @@ export class AddProductToMenuComponent implements OnInit {
       product.amount = Number(this.form.value.amount);
       product.price = this.form.value.price;
       product.promotionPrice = this.form.value.promotionPrice;
+      product.detail = this.form.value.detail;
       const params = { ...this.product, ...product };
       const res = await this.firebaseService.createMenu(this.dialogData.menuId, this.dialogData.tab, params);
       console.log(res);
