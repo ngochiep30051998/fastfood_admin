@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { IMenu } from '../../interfaces/menu.interfaces';
 import { ICategories, IPopupData, IProduct } from '../../interfaces/products.interface';
 import { AddProductToMenuComponent } from '../add-product-to-menu/add-product-to-menu.component';
+import { PopupRemoveProductComponent } from '../popup-remove-product/popup-remove-product.component';
 
 @Component({
   selector: 'app-list-product',
@@ -62,6 +63,20 @@ export class ListProductComponent implements OnInit, OnChanges {
       data,
       minWidth: 600,
       minHeight: 200,
+      autoFocus: false
+    });
+  }
+
+  removeProduct(product: IProduct) {
+    const data: IPopupData = {
+      tab: this.tab,
+      menuId: moment(this.date).format('DD-MM-YYYY'),
+      product
+    };
+    this.dialog.open(PopupRemoveProductComponent, {
+      data,
+      minWidth: 200,
+      minHeight: 100,
       autoFocus: false
     });
   }

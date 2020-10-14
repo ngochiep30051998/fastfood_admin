@@ -131,4 +131,8 @@ export class FirebaseService {
       });
     });
   }
+
+  removeProductFromMenu(menuId: string, tab: string, product: IProduct): Promise<any> {
+    return this.db.object(`menus/${menuId}/${tab}/${product.id}`).remove();
+  }
 }

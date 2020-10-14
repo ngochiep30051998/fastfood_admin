@@ -25,8 +25,8 @@
                 <button mat-mini-fab color="primary">
                     <mat-icon class="mat-icon-btn">edit</mat-icon>
                 </button>
-                <button mat-mini-fab color="warn">
-                    <mat-icon class="mat-icon-btn">remove</mat-icon>
+                <button mat-mini-fab color="warn" (click)="removeProduct(product)">
+                    <mat-icon class="mat-icon-btn" >delete</mat-icon>
                 </button>
             </div>
         </mat-card-content>

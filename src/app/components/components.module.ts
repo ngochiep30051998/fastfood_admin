@@ -9,13 +9,15 @@ import { AddProductToMenuComponent } from './add-product-to-menu/add-product-to-
 import { MatDialogRef, MatFormFieldModule, MAT_DIALOG_DATA } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DirectivesModule } from '../directives/directives.module';
+import { PopupRemoveProductComponent } from './popup-remove-product/popup-remove-product.component';
 
 @NgModule({
   declarations: [
     LoadingInsideBtnComponent,
     OverlayComponent,
     ListProductComponent,
-    AddProductToMenuComponent
+    AddProductToMenuComponent,
+    PopupRemoveProductComponent,
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,8 @@ import { DirectivesModule } from '../directives/directives.module';
     AddProductToMenuComponent
   ],
   entryComponents: [
-    AddProductToMenuComponent
+    AddProductToMenuComponent,
+    PopupRemoveProductComponent
   ],
   providers: [
     { provide: MAT_DIALOG_DATA, useValue: {} },

@@ -1,0 +1,13 @@
+.flex-container {
+    display: flex;
+    justify-content: flex-end;
+    /* background-color: DodgerBlue; */
+  }
+
+  mat-icon{
+      cursor: pointer;
+  }
+
+.flex-container button {
+    margin-left: 10px;
+}
