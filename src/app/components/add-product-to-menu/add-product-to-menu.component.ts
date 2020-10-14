@@ -78,15 +78,20 @@ export class AddProductToMenuComponent implements OnInit {
       detail: product.detail,
       search: product.name,
       category: product.catId,
-      amount: product.amount
+      amount: product.amount,
+      promotionPrice: product.promotionPrice
     });
     console.log(product);
     this.product = product;
     this.imageUrl = product.displayImage || product.photos[0].value;
   }
   resetForm() {
-    this.form.reset();
-    this.imageUrl = '';
+    if (this.dialogData.product) {
+      this.selectProduct(this.dialogData.product)
+    } else {
+      this.form.reset();
+      this.imageUrl = '';
+    }
   }
 
   categoryChange(value) {
@@ -107,7 +112,10 @@ export class AddProductToMenuComponent implements OnInit {
       const product: IProduct = await this.firebaseService.getProductById(this.form.value.category, this.product.id);
       product.amount = Number(this.form.value.amount);
       product.price = this.form.value.price;
-      product.promotionPrice = this.form.value.promotionPrice;
+      if (this.form.value.promotionPrice) {
+        product.promotionPrice = this.form.value.promotionPrice;
+
+      }
       product.detail = this.form.value.detail || '';
       const params = { ...this.product, ...product };
       const res = await this.firebaseService.createMenu(this.dialogData.menuId, this.dialogData.tab, params);
