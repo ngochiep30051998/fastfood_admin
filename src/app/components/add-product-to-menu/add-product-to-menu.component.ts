@@ -121,7 +121,7 @@ export class AddProductToMenuComponent implements OnInit {
       const res = await this.firebaseService.createMenu(this.dialogData.menuId, this.dialogData.tab, params);
       console.log(res);
       this.toastr.success('Thêm thành công');
-      // this.dialogRef.close();
+      this.dialogRef.close();
     } catch (e) {
       console.log(e);
       if (e && e.message) {
@@ -152,7 +152,7 @@ export class AddProductToMenuComponent implements OnInit {
       const res = await this.firebaseService.updateProductInMenu(this.dialogData.menuId, this.dialogData.tab, params);
       console.log(res);
       this.toastr.success('Cập nhật thành công');
-      // this.dialogRef.close();
+      this.dialogRef.close();
     } catch (e) {
       console.log(e);
       if (e && e.message) {
