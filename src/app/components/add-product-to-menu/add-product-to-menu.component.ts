@@ -43,13 +43,14 @@ export class AddProductToMenuComponent implements OnInit {
       this.allProduct = res.reduce((accumulator, currentValue) => {
         return accumulator.concat(currentValue.products);
       }, []);
-      console.log(this.categories, this.allProduct);
     });
 
-    console.log(this.dialogData)
   }
 
   ngOnInit() {
+    if (this.dialogData.product) {
+      this.selectProduct(this.dialogData.product);
+    }
   }
 
   searchProduct(value: string) {
@@ -76,7 +77,8 @@ export class AddProductToMenuComponent implements OnInit {
       price: product.price,
       detail: product.detail,
       search: product.name,
-      category: product.catId
+      category: product.catId,
+      amount: product.amount
     });
     console.log(product);
     this.product = product;
@@ -117,6 +119,38 @@ export class AddProductToMenuComponent implements OnInit {
       if (e && e.message) {
         this.toastr.error(e.message);
 
+      }
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  async updateProduct() {
+    try {
+      this.helperService.markFormGroupTouched(this.form);
+      if (this.form.invalid) {
+        setTimeout(() => {
+          this.helperService.scrollToError();
+        }, 500);
+        return;
+      }
+      this.loading = true;
+      const product: IProduct = await this.firebaseService.getProductById(this.form.value.category, this.product.id);
+      product.amount = Number(this.form.value.amount);
+      product.price = this.form.value.price;
+      product.promotionPrice = this.form.value.promotionPrice;
+      product.detail = this.form.value.detail || '';
+      const params = { ...this.product, ...product };
+      const res = await this.firebaseService.updateProductInMenu(this.dialogData.menuId, this.dialogData.tab, params);
+      console.log(res);
+      this.toastr.success('Cập nhật thành công');
+      // this.dialogRef.close();
+    } catch (e) {
+      console.log(e);
+      if (e && e.message) {
+        this.toastr.error(e.message);
+      } else {
+        this.toastr.error('Cập nhật thất bại');
       }
     } finally {
       this.loading = false;

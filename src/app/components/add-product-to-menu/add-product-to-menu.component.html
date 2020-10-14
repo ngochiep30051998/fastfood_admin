@@ -6,7 +6,7 @@
 
     <mat-card>
         <mat-card-title>
-            Thêm sản phẩm
+            {{dialogData.product ? 'Cập nhật sản phẩm' :'Thêm sản phẩm vào danh sách'}}
         </mat-card-title>
 
         <mat-card-content>
@@ -69,9 +69,14 @@
 </mat-dialog-content>
 
 <div class="flex-end">
-    <button mat-raised-button color="primary" (click)="addProductToMenu()" [disabled]='loading'>
+    <button mat-raised-button color="primary" *ngIf="!dialogData.product" (click)="addProductToMenu()" [disabled]='loading'>
         <app-loading-inside-btn *ngIf="loading"></app-loading-inside-btn>
         {{loading?'':'Thêm'}}
+    </button>
+
+    <button mat-raised-button color="primary" *ngIf="dialogData.product" (click)="updateProduct()" [disabled]='loading'>
+        <app-loading-inside-btn *ngIf="loading"></app-loading-inside-btn>
+        {{loading?'':'Cập nhật'}}
     </button>
 
     <button mat-raised-button color="warn" (click)="resetForm()">Huỷ</button>

@@ -132,7 +132,11 @@ export class FirebaseService {
     });
   }
 
-  removeProductFromMenu(menuId: string, tab: string, product: IProduct): Promise<any> {
+  removeProductInMenu(menuId: string, tab: string, product: IProduct): Promise<any> {
     return this.db.object(`menus/${menuId}/${tab}/${product.id}`).remove();
+  }
+
+  updateProductInMenu(menuId: string, tab: string, product: IProduct): Promise<any> {
+    return this.db.object(`menus/${menuId}/${tab}/${product.id}`).update(product);
   }
 }

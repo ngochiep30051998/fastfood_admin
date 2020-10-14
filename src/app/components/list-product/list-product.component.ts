@@ -67,6 +67,19 @@ export class ListProductComponent implements OnInit, OnChanges {
     });
   }
 
+  editProduct(product: IProduct) {
+    const data: IPopupData = {
+      tab: this.tab,
+      product,
+      menuId: moment(this.date).format('DD-MM-YYYY')
+    };
+    this.dialog.open(AddProductToMenuComponent, {
+      data,
+      minWidth: 600,
+      minHeight: 200,
+      autoFocus: false
+    });
+  }
   removeProduct(product: IProduct) {
     const data: IPopupData = {
       tab: this.tab,

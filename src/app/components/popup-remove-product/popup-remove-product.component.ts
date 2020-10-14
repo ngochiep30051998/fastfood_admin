@@ -23,7 +23,7 @@ export class PopupRemoveProductComponent implements OnInit {
 
   delete() {
     this.loading = true;
-    this.firebaseService.removeProductFromMenu(this.dialogData.menuId, this.dialogData.tab, this.dialogData.product).then((res: any) => {
+    this.firebaseService.removeProductInMenu(this.dialogData.menuId, this.dialogData.tab, this.dialogData.product).then((res: any) => {
       console.log(res);
       this.loading = false;
       this.toastr.success('Xoá thành công');
