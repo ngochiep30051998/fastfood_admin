@@ -35,8 +35,12 @@ export class AddProductToMenuComponent implements OnInit {
       detail: [''],
       price: ['', Validators.required],
       promotionPrice: [''],
-      amount: [0, Validators.required]
-    });
+      amount: [0, Validators.required],
+      unit: ['']
+    },
+      {
+        validators: this.helperService.MustLower('price', 'promotionPrice')
+      });
     this.firebaseService.getCategories().subscribe((res: any) => {
       this.categories = res;
 
@@ -79,7 +83,8 @@ export class AddProductToMenuComponent implements OnInit {
       search: product.name,
       category: product.catId,
       amount: product.amount,
-      promotionPrice: product.promotionPrice
+      promotionPrice: product.promotionPrice,
+      unit: product.unit
     });
     console.log(product);
     this.product = product;
@@ -117,6 +122,7 @@ export class AddProductToMenuComponent implements OnInit {
 
       }
       product.detail = this.form.value.detail || '';
+      product.unit = this.form.value.unit;
       const params = { ...this.product, ...product };
       const res = await this.firebaseService.createMenu(this.dialogData.menuId, this.dialogData.tab, params);
       console.log(res);

@@ -18,7 +18,6 @@ import { AppRoutingModule } from './app.routing';
 import { MomentUtcDateAdapter } from './common/MomentUtcDateAdapter';
 import { ComponentsModule } from './components/components.module';
 import { DemoMaterialModule } from './demo-material-module';
-import { CommonHttpInterceptor } from './interceptor/common.interceptor';
 import { FullComponent } from './layouts/full/full.component';
 import { AppHeaderComponent } from './layouts/full/header/header.component';
 import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
@@ -81,11 +80,7 @@ export function getDutchPaginatorIntl() {
   ],
   providers: [
     AngularFireAuthGuard,
-    {
-      provide: HTTP_INTERCEPTORS,
-      multi: true,
-      useClass: CommonHttpInterceptor,
-    },
+
     { provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl() },
     { provide: MAT_DATE_LOCALE, useValue: 'vi-vi' },
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },

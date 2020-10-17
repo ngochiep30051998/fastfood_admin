@@ -61,31 +61,4 @@ export class AuthService {
   getCurrentUser() {
     return this.angularFireAuth.user;
   }
-
-  getRefreshToken(params) {
-    const url = `${this.api}auth/refresh-token`;
-    return this.httpClient.post(url, params);
-  }
-
-  createUser(params) {
-    const url = `${this.api}auth/register`;
-    return new Promise((resolve, reject) => {
-      return this.httpClient.post(url, params).subscribe(res => {
-        resolve(res);
-      }, err => {
-        reject(err);
-      });
-    });
-  }
-
-  updatePassword(params) {
-    const url = `${this.api}auth/change-password`;
-    return new Promise((resolve, reject) => {
-      this.httpClient.put(url, params).subscribe(res => {
-        resolve(res);
-      }, err => {
-        reject(err);
-      });
-    });
-  }
 }
