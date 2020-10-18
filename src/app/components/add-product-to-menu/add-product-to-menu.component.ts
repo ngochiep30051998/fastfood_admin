@@ -152,7 +152,9 @@ export class AddProductToMenuComponent implements OnInit {
       const product: IProduct = await this.firebaseService.getProductById(this.form.value.category, this.product.id);
       product.amount = Number(this.form.value.amount);
       product.price = this.form.value.price;
-      product.promotionPrice = this.form.value.promotionPrice;
+      if (this.form.value.promotionPrice) {
+        product.promotionPrice = this.form.value.promotionPrice;
+      }
       product.detail = this.form.value.detail || '';
       product.unit = this.form.value.unit || '' ;
       const params = { ...this.product, ...product };
