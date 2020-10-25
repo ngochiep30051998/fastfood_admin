@@ -123,6 +123,7 @@ export class AddProductToMenuComponent implements OnInit {
       }
       product.detail = this.form.value.detail || '';
       product.unit = this.form.value.unit || '' ;
+      product.meal = this.dialogData.tab;
       const params = { ...this.product, ...product };
       const res = await this.firebaseService.createMenu(this.dialogData.menuId, this.dialogData.tab, params);
       console.log(res);
@@ -157,6 +158,7 @@ export class AddProductToMenuComponent implements OnInit {
       }
       product.detail = this.form.value.detail || '';
       product.unit = this.form.value.unit || '' ;
+      product.meal = this.dialogData.tab;
       const params = { ...this.product, ...product };
       const res = await this.firebaseService.updateProductInMenu(this.dialogData.menuId, this.dialogData.tab, params);
       console.log(res);

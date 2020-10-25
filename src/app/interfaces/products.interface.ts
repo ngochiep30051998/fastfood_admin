@@ -13,6 +13,7 @@ export interface IProduct {
     detail?: string;
     amount?: number;
     unit?: string;
+    meal?: string;
 }
 
 export interface IDiglogData {
