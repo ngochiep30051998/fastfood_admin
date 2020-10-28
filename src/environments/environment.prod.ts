@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  api: 'https://api-fast-food.herokuapp.com/api/',
+  api: 'https://api-fast-food.herokuapp.com/',
   firebaseConfig: {
     apiKey: 'AIzaSyD1-aktMFLxPHClyjLuUQF5tMVIYW2IGj4',
     authDomain: 'food-4dd37.firebaseapp.com',
