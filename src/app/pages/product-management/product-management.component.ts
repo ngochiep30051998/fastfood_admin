@@ -7,7 +7,7 @@ import { FirebaseService } from '../../services/firebase/firebase.service';
 @Component({
   selector: 'app-product-management',
   templateUrl: './product-management.component.html',
-  styleUrls: ['./product-management.component.css']
+  styleUrls: ['./product-management.component.scss']
 })
 export class ProductManagementComponent implements OnInit {
 

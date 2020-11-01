@@ -9,7 +9,7 @@ import { FirebaseService } from '../../services/firebase/firebase.service';
 @Component({
   selector: 'app-menu-management',
   templateUrl: './menu-management.component.html',
-  styleUrls: ['./menu-management.component.css']
+  styleUrls: ['./menu-management.component.scss']
 })
 export class MenuManagementComponent implements OnInit, OnDestroy {
 
