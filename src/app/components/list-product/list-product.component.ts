@@ -29,28 +29,7 @@ export class ListProductComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     if (this.lisProduct) {
-      // this.pageSize = this.lisProduct.length;
       this.dataSource = this.lisProduct.slice(0, this.pageSize);
-    }
-  }
-  async getProduct() {
-    try {
-      const catId = '-MIys7i-9MBKrV-OpmBM';
-      const prodId = '13882';
-      const category: ICategories = await this.firebaseService.getCatById(catId);
-      const product: IProduct = await this.firebaseService.getProductById(catId, prodId);
-      product.catId = catId;
-      product.catName = category.categoryName;
-      product.detail = 'sản phẩm dành cho người thích ăn cơm rang';
-      const date = moment(this.date).format('DD-MM-YYYY');
-      const menu: IMenu = {
-        id: date
-      };
-      menu[this.tab] = [product];
-      console.log(menu)
-      this.firebaseService.createMultiValuesMenu(menu);
-    } catch (e) {
-      console.log(e);
     }
   }
 

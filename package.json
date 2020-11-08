@@ -37,6 +37,7 @@
     "lodash": "^4.17.15",
     "moment": "^2.25.3",
     "ng-chartist": "4.1.0",
+    "ngx-material-file-input": "2.0.0",
     "ngx-toastr": "11",
     "node-sass": "^4.13.1",
     "rxjs": "^6.5.4",

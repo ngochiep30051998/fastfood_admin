@@ -29,8 +29,8 @@ export interface ICategories {
 }
 
 export interface IPopupData {
-    tab: string;
-    menuId: string;
+    tab?: string;
+    menuId?: string;
     product?: IProduct;
     type?: string;
 }

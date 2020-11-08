@@ -21,7 +21,7 @@
         </mat-form-field> -->
     </div>
     <div class="action">
-        <button mat-raised-button color="primary" >Thêm</button>
+        <button mat-raised-button color="primary" (click)="addProduct()" >Thêm</button>
     </div>
 </div>
 <div class="mat-elevation-z8">
@@ -58,7 +58,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
             <td mat-cell *matCellDef="let element;let row">
                 <mat-icon >delete</mat-icon>
-                <mat-icon >edit</mat-icon>
+                <mat-icon (click)="addProduct(row)">edit</mat-icon>
             </td>
 
         </ng-container>

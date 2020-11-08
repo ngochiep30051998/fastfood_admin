@@ -1,1 +1,107 @@
-<p>add-product works!</p>
+<div class="flex-end">
+    <mat-icon mat-dialog-close class="pointer">close</mat-icon>
+</div>
+
+<mat-dialog-content>
+    <mat-grid-list cols="1" rowHeight="40px">
+        <mat-grid-tile>
+            <mat-card-title>
+                {{dialogData.product ? 'Cập nhật sản phẩm' :'Thêm sản phẩm'}}
+            </mat-card-title>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <form class="example-form" [formGroup]="form">
+        <mat-grid-list cols="2" rowHeight="80px">
+            <mat-grid-tile>
+                <mat-form-field [hideRequiredMarker]="false">
+                    <mat-label>Loại sản phẩm</mat-label>
+                    <mat-select placeholder="Loại sản phẩm" formControlName="category">
+                        <mat-option *ngFor="let cat of categories" [value]="cat?.key">{{cat?.categoryName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Tên sản phẩm</mat-label>
+                    <input matInput placeholder="Tên sản phẩm" formControlName="productName">
+                </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list cols="2" rowHeight="80px">
+            <mat-grid-tile>
+                <mat-form-field [hideRequiredMarker]="false" [floatLabel]="'auto'">
+                    <mat-label>Đơn giá</mat-label>
+                    <input matInput appInputNumber placeholder="Đơn giá" type="number" formControlName="price">
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field [hideRequiredMarker]="false" [floatLabel]="'auto'">
+                    <mat-label>Giá khuyến mại</mat-label>
+                    <input appInputNumber matInput placeholder="Giá khuyến mại" type="number"
+                        formControlName="promotionPrice">
+                </mat-form-field>
+                <p class="error-text" *ngIf="form?.controls?.promotionPrice.touched 
+                            && form?.controls?.promotionPrice?.invalid && 
+                            form.controls.promotionPrice?.errors?.mustLower">
+                    Giá khuyến mại phải nhỏ hơn giá sản phẩm
+                </p>
+            </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="2" rowHeight="80px">
+            <mat-grid-tile>
+
+                <mat-form-field [hideRequiredMarker]="false" [floatLabel]="'auto'">
+                    <mat-label>Số lượng</mat-label>
+                    <input appInputNumber matInput placeholder="Số lượng" type="number" formControlName="amount">
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field [hideRequiredMarker]="false" [floatLabel]="'auto'">
+                    <mat-label>Đơn vị tính</mat-label>
+                    <input matInput placeholder="Đơn vị tính" formControlName="unit">
+                </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+
+
+
+        <mat-form-field class="example-full-width">
+            <textarea matInput placeholder="Mô tả" matTextareaAutosize matAutosizeMinRows="2" formControlName="detail"
+                matAutosizeMaxRows="5"></textarea>
+        </mat-form-field>
+
+        <mat-form-field>
+            <ngx-mat-file-input formControlName="photos" [accept]="'image/*'" placeholder="ảnh sản phẩm" multiple
+                (change)="onFileChange($event)">
+            </ngx-mat-file-input>
+            <mat-icon matSuffix>folder</mat-icon>
+        </mat-form-field>
+
+        <mat-grid-list cols="4" rowHeight="4rem">
+            <mat-grid-tile [colspan]="1" [rowspan]="2" rowHeight="100%" *ngFor='let url of images'>
+                <img mat-card-image class="card-image" *ngIf="imageUrl"
+                    [src]="url || 'assets/images/defaults/default-product.jpg'">
+            </mat-grid-tile>
+        </mat-grid-list>
+
+
+    </form>
+</mat-dialog-content>
+
+<div class="flex-end">
+    <button mat-raised-button color="primary" *ngIf="!dialogData.product" [disabled]='loading'>
+        <app-loading-inside-btn *ngIf="loading"></app-loading-inside-btn>
+        {{loading?'':'Thêm'}}
+    </button>
+
+    <button mat-raised-button color="primary" *ngIf="dialogData.product" [disabled]='loading'>
+        <app-loading-inside-btn *ngIf="loading"></app-loading-inside-btn>
+        {{loading?'':'Cập nhật'}}
+    </button>
+
+    <button mat-raised-button color="warn">Huỷ</button>
+</div>

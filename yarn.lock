@@ -5589,6 +5589,13 @@ ng-chartist@4.1.0:
   dependencies:
     tslib "^1.9.0"
 
+ngx-material-file-input@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-material-file-input/-/ngx-material-file-input-2.0.0.tgz#ae94d9e79193015258ff1edb101b04c0b85a26da"
+  integrity sha512-E8JyFbAZRzCNC96lbkzg+LS4xmcfoZ3Mh4jhuWfAeBngMLlLxdMW2dgZSu8MFO9V2ZQytb1DPjgmvGhJo5TJHg==
+  dependencies:
+    tslib "^1.9.0"
+
 ngx-toastr@11:
   version "11.3.3"
   resolved "https://registry.yarnpkg.com/ngx-toastr/-/ngx-toastr-11.3.3.tgz#d360061edb2bee0a045e6b3bf832754007ac7b3d"
