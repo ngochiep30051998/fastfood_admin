@@ -10,12 +10,15 @@ import { ProductManagementComponent } from './product-management.component';
 import { AddProductComponent } from './add-product/add-product.component';
 import { NGX_MAT_FILE_INPUT_CONFIG } from 'ngx-material-file-input';
 import { config } from 'process';
+import { ModalDeleteProductComponent } from './modal-delete-product/modal-delete-product.component';
 
 
 @NgModule({
   declarations: [
     ProductManagementComponent,
-    AddProductComponent]
+    AddProductComponent,
+    ModalDeleteProductComponent
+  ]
   ,
   imports: [
     CommonModule,
@@ -27,7 +30,8 @@ import { config } from 'process';
     RouterModule.forChild([{ path: '', component: ProductManagementComponent }])
   ],
   entryComponents: [
-    AddProductComponent
+    AddProductComponent,
+    ModalDeleteProductComponent
   ],
   providers: [
     { provide: MAT_DIALOG_DATA, useValue: {} },

@@ -3,12 +3,12 @@
     <div class="filter">
         <mat-form-field>
             <mat-label>Tìm kiếm</mat-label>
-            <input matInput placeholder="Nhập từ khoá">
+            <input matInput placeholder="Nhập từ khoá" [(ngModel)]="txtSearch" (keyup)="applyFilter($event)" >
         </mat-form-field>
     </div>
     <div class="condition">
         <mat-form-field [hideRequiredMarker]="false" [floatLabel]="'auto'">
-            <mat-select placeholder="Loại món ăn">
+            <mat-select placeholder="Loại món ăn" [(ngModel)]="catId" (ngModelChange)="onChangeSelect()">
                 <mat-option >Loại món ăn</mat-option>
                 <mat-option *ngFor="let cat of categories" [value]="cat?.key" >{{cat?.categoryName}}</mat-option>
             </mat-select>
@@ -44,7 +44,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> ảnh</th>
             <td mat-cell *matCellDef="let element;let row">
                 <div class="image-container">
-                    <img class="display-image" [src]="element?.displayImage">
+                    <img class="display-image" [src]="element?.displayImage  || 'assets/images/defaults/default-product.jpg'">
                 </div>
             </td>
         </ng-container>
@@ -57,7 +57,7 @@
         <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
             <td mat-cell *matCellDef="let element;let row">
-                <mat-icon >delete</mat-icon>
+                <mat-icon (click)="removeProduct(row)">delete</mat-icon>
                 <mat-icon (click)="addProduct(row)">edit</mat-icon>
             </td>
 

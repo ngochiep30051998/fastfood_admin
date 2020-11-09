@@ -5,6 +5,7 @@ import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { DateAdapter, MatPaginatorIntl, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
@@ -76,6 +77,7 @@ export function getDutchPaginatorIntl() {
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
+    AngularFireStorageModule
     // RouterModule.forRoot(AppRoutes, { preloadingStrategy: PreloadAllModules, useHash: true })
   ],
   providers: [

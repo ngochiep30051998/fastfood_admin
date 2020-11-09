@@ -1,0 +1,14 @@
+<div class="flex-container">
+    <mat-icon mat-dialog-close>close</mat-icon>
+</div>
+<h2 mat-dialog-title>Bạn có chắc chắn muốn xoá : {{dialogData?.product?.name}} ?</h2>
+<!-- <mat-dialog-content>
+  
+</mat-dialog-content> -->
+<div class="flex-container">
+    <button mat-raised-button color="warn" [disabled]='loading' (click)="delete()">
+        <app-loading-inside-btn *ngIf="loading"></app-loading-inside-btn>
+        {{loading?'':'Có'}}
+    </button>
+    <button mat-raised-button color="primary" mat-dialog-close>Không</button>
+</div>

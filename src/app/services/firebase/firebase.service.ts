@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { IMenu } from '../../interfaces/menu.interfaces';
 import { IProduct } from '../../interfaces/products.interface';
 import { HelperService } from '../helper/helper.service';
+import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 @Injectable({
   providedIn: 'root'
 })
@@ -11,7 +12,8 @@ export class FirebaseService {
 
   constructor(
     private db: AngularFireDatabase,
-    private helperService: HelperService
+    private helperService: HelperService,
+    public storage: AngularFireStorage,
   ) { }
 
   getRef(ref) {
@@ -138,5 +140,50 @@ export class FirebaseService {
 
   updateProductInMenu(menuId: string, tab: string, product: IProduct): Promise<any> {
     return this.db.object(`menus/${menuId}/${tab}/${product.id}`).update(product);
+  }
+
+  async createProduct(product: IProduct) {
+    try {
+      Object.keys(product).forEach(key => product[key] === undefined ? delete product[key] : {});
+      return this.db.list(`categories/${product.catId}/products/`).push(product);
+    } catch (e) {
+      console.log(e);
+      return Promise.reject(e);
+    }
+  }
+
+  async updateProduct(product: IProduct) {
+    try {
+      Object.keys(product).forEach(key => product[key] === undefined ? delete product[key] : {});
+      return this.db.object(`categories/${product.catId}/products/${product.id}`).update(product);
+    } catch (e) {
+      console.log(e);
+      return Promise.reject(e);
+    }
+  }
+
+  removeProduct(product: IProduct) {
+    try {
+      return this.db.object(`categories/${product.catId}/products/${product.id}`).remove();
+    } catch (e) {
+      console.log(e);
+      return Promise.reject(e);
+    }
+  }
+  removePhotoFromProduct(product: IProduct, key) {
+    try {
+      this.db.object(`categories/${product.catId}/products/${product.id}/photos/${key}`).remove();
+    } catch (e) {
+      console.log(e);
+      return Promise.reject(e);
+    }
+  }
+
+  removePhoto(path) {
+    return this.storage.storage.refFromURL(path).delete();
+  }
+
+  removeChildProduct(product: IProduct, child) {
+    this.db.object(`categories/${product.catId}/products/${product.id}/${child}`).remove();
   }
 }

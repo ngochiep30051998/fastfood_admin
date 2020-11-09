@@ -11,6 +11,17 @@
         </mat-grid-tile>
     </mat-grid-list>
     <form class="example-form" [formGroup]="form">
+        <mat-grid-list cols="1" rowHeight="80px">
+            <mat-grid-tile>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Tên sản phẩm</mat-label>
+                    <input matInput placeholder="Tên sản phẩm" formControlName="productName">
+                </mat-form-field>
+            </mat-grid-tile>
+
+
+        </mat-grid-list>
+
         <mat-grid-list cols="2" rowHeight="80px">
             <mat-grid-tile>
                 <mat-form-field [hideRequiredMarker]="false">
@@ -21,21 +32,16 @@
                     </mat-select>
                 </mat-form-field>
             </mat-grid-tile>
-            <mat-grid-tile>
-                <mat-form-field class="example-full-width">
-                    <mat-label>Tên sản phẩm</mat-label>
-                    <input matInput placeholder="Tên sản phẩm" formControlName="productName">
-                </mat-form-field>
-            </mat-grid-tile>
-        </mat-grid-list>
 
-        <mat-grid-list cols="2" rowHeight="80px">
             <mat-grid-tile>
                 <mat-form-field [hideRequiredMarker]="false" [floatLabel]="'auto'">
                     <mat-label>Đơn giá</mat-label>
                     <input matInput appInputNumber placeholder="Đơn giá" type="number" formControlName="price">
                 </mat-form-field>
             </mat-grid-tile>
+
+        </mat-grid-list>
+        <mat-grid-list cols="2" rowHeight="80px">
             <mat-grid-tile>
                 <mat-form-field [hideRequiredMarker]="false" [floatLabel]="'auto'">
                     <mat-label>Giá khuyến mại</mat-label>
@@ -48,15 +54,6 @@
                     Giá khuyến mại phải nhỏ hơn giá sản phẩm
                 </p>
             </mat-grid-tile>
-        </mat-grid-list>
-        <mat-grid-list cols="2" rowHeight="80px">
-            <mat-grid-tile>
-
-                <mat-form-field [hideRequiredMarker]="false" [floatLabel]="'auto'">
-                    <mat-label>Số lượng</mat-label>
-                    <input appInputNumber matInput placeholder="Số lượng" type="number" formControlName="amount">
-                </mat-form-field>
-            </mat-grid-tile>
 
             <mat-grid-tile>
                 <mat-form-field [hideRequiredMarker]="false" [floatLabel]="'auto'">
@@ -64,6 +61,7 @@
                     <input matInput placeholder="Đơn vị tính" formControlName="unit">
                 </mat-form-field>
             </mat-grid-tile>
+
         </mat-grid-list>
 
 
@@ -75,21 +73,34 @@
         </mat-form-field>
 
         <mat-form-field>
-            <ngx-mat-file-input formControlName="photos" [accept]="'image/*'" placeholder="ảnh sản phẩm" multiple
+            <ngx-mat-file-input formControlName="displayImage" [accept]="'image/*'" placeholder="Ảnh đại diện sản phẩm"
+                (change)="onChangeDisplayImage($event)">
+            </ngx-mat-file-input>
+            <mat-icon matSuffix>folder</mat-icon>
+        </mat-form-field>
+        <div class="group-img">
+            <div class="item">
+                <div class="item-inner">
+                    <img class="display-image" [src]="displayImage || 'assets/images/defaults/default-product.jpg'">
+                </div>
+                <button type="button" (click)="removeDisplayImage()">xoá</button>
+            </div>
+        </div>
+
+        <mat-form-field>
+            <ngx-mat-file-input formControlName="photos" [accept]="'image/*'" placeholder="Ảnh chi tiết sản phẩm" multiple
                 (change)="onFileChange($event)">
             </ngx-mat-file-input>
             <mat-icon matSuffix>folder</mat-icon>
         </mat-form-field>
-
-        <!-- <mat-icon matSuffix (click)="fileChange($event)">folder</mat-icon> -->
-
-        <mat-grid-list cols="4" rowHeight="4rem">
-            <mat-grid-tile [colspan]="1" [rowspan]="2" rowHeight="100%" *ngFor='let url of images'>
-                <img mat-card-image class="card-image" *ngIf="imageUrl"
-                    [src]="url || 'assets/images/defaults/default-product.jpg'">
-            </mat-grid-tile>
-        </mat-grid-list>
-
+        <div class="group-img">
+            <div class="item" *ngFor='let url of images;let i = index'>
+                <div class="item-inner">
+                    <img class="display-image" [src]="url || 'assets/images/defaults/default-product.jpg'">
+                </div>
+                <button (click)="removePhoto(i,url)" type="button">xoá</button>
+            </div>
+        </div>
 
     </form>
 </mat-dialog-content>
@@ -100,10 +111,10 @@
         {{loading?'':'Thêm'}}
     </button>
 
-    <button mat-raised-button color="primary" *ngIf="dialogData.product" [disabled]='loading'>
+    <button mat-raised-button color="primary" *ngIf="dialogData.product" [disabled]='loading' (click)="updateProduct()">
         <app-loading-inside-btn *ngIf="loading"></app-loading-inside-btn>
         {{loading?'':'Cập nhật'}}
     </button>
 
-    <button mat-raised-button color="warn">Huỷ</button>
+    <!-- <button mat-raised-button color="warn">Huỷ</button> -->
 </div>

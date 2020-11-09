@@ -122,7 +122,7 @@ export class AddProductToMenuComponent implements OnInit {
 
       }
       product.detail = this.form.value.detail || '';
-      product.unit = this.form.value.unit || '' ;
+      product.unit = this.form.value.unit || '';
       product.meal = this.dialogData.tab;
       const params = { ...this.product, ...product };
       const res = await this.firebaseService.createMenu(this.dialogData.menuId, this.dialogData.tab, params);
@@ -157,11 +157,11 @@ export class AddProductToMenuComponent implements OnInit {
         product.promotionPrice = this.form.value.promotionPrice;
       }
       product.detail = this.form.value.detail || '';
-      product.unit = this.form.value.unit || '' ;
+      product.unit = this.form.value.unit || '';
       product.meal = this.dialogData.tab;
       const params = { ...this.product, ...product };
       const res = await this.firebaseService.updateProductInMenu(this.dialogData.menuId, this.dialogData.tab, params);
-      console.log(res);
+
       this.toastr.success('Cập nhật thành công');
       this.dialogRef.close();
     } catch (e) {
@@ -175,4 +175,6 @@ export class AddProductToMenuComponent implements OnInit {
       this.loading = false;
     }
   }
+
+
 }

@@ -16,12 +16,6 @@ export interface IProduct {
     meal?: string;
 }
 
-export interface IDiglogData {
-    type: string;
-    data: any;
-    extendData?: any;
-}
-
 export interface ICategories {
     key?: string;
     categoryName?: string;
