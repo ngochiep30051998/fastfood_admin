@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { DOC_ORIENTATION, NgxImageCompressService } from 'ngx-image-compress';
 import { FileValidator } from 'ngx-material-file-input';
 import { ToastrService } from 'ngx-toastr';
 import { ICategories, IPopupData, IProduct } from '../../../interfaces/products.interface';
@@ -29,13 +30,14 @@ export class AddProductComponent implements OnInit {
     private helperService: HelperService,
     private fb: FormBuilder,
     private toastr: ToastrService,
+    private imageCompress: NgxImageCompressService,
     @Inject(MAT_DIALOG_DATA) public dialogData: IPopupData,
   ) {
     this.form = this.fb.group({
       category: ['', Validators.required],
       search: [''],
       productId: [''],
-      productName: [''],
+      productName: ['', Validators.required],
       detail: [''],
       price: ['', Validators.required],
       promotionPrice: [''],
@@ -55,23 +57,27 @@ export class AddProductComponent implements OnInit {
   ngOnInit() {
   }
 
-  fileChange(event) {
-    console.log(this.form.value.photos._files)
-    console.log(event)
-  }
   onFileChange(event) {
-    if (this.form.value.photos._files && this.form.value.photos._files[0]) {
+    if (this.form.value.photos && this.form.value.photos._files && this.form.value.photos._files[0]) {
       const filesAmount = this.form.value.photos._files.length;
+      this.images = [];
+      const orientation = DOC_ORIENTATION;
       for (let i = 0; i < filesAmount; i++) {
         const reader = new FileReader();
-
-        reader.onload = (e: any) => {
-          this.images.push(e.target.result);
-        };
-
         reader.readAsDataURL(this.form.value.photos._files[i]);
+
+        reader.onload = async (e: any) => {
+          // this.images.push(e.target.result);
+          const result = await this.imageCompress.compressFile(reader.result, orientation, 20, 15);
+          this.images.push(result);
+        };
       }
     }
+  }
+
+  create() {
+    this.form.markAllAsTouched();
+    console.log(this.form.value)
   }
 }
 

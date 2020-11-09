@@ -1,5 +1,5 @@
 
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
@@ -11,6 +11,7 @@ import { DateAdapter, MatPaginatorIntl, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from
 import { MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxImageCompressService } from 'ngx-image-compress';
 import { ToastrModule } from 'ngx-toastr';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
@@ -23,7 +24,6 @@ import { AppHeaderComponent } from './layouts/full/header/header.component';
 import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
 import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './shared/spinner.component';
-
 
 const dutchRangeLabel = (page: number, pageSize: number, length: number) => {
   if (length === 0 || pageSize === 0) { return `0 của ${length}`; }
@@ -80,7 +80,7 @@ export function getDutchPaginatorIntl() {
   ],
   providers: [
     AngularFireAuthGuard,
-
+    NgxImageCompressService,
     { provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl() },
     { provide: MAT_DATE_LOCALE, useValue: 'vi-vi' },
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },

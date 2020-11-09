@@ -81,6 +81,8 @@
             <mat-icon matSuffix>folder</mat-icon>
         </mat-form-field>
 
+        <!-- <mat-icon matSuffix (click)="fileChange($event)">folder</mat-icon> -->
+
         <mat-grid-list cols="4" rowHeight="4rem">
             <mat-grid-tile [colspan]="1" [rowspan]="2" rowHeight="100%" *ngFor='let url of images'>
                 <img mat-card-image class="card-image" *ngIf="imageUrl"
@@ -93,7 +95,7 @@
 </mat-dialog-content>
 
 <div class="flex-end">
-    <button mat-raised-button color="primary" *ngIf="!dialogData.product" [disabled]='loading'>
+    <button mat-raised-button color="primary" *ngIf="!dialogData.product" [disabled]='loading' (click)="create()">
         <app-loading-inside-btn *ngIf="loading"></app-loading-inside-btn>
         {{loading?'':'Thêm'}}
     </button>
