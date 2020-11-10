@@ -1,0 +1,130 @@
+<div class="flex-container">
+    <div class="filter">
+        <mat-form-field>
+            <mat-label>Tìm kiếm</mat-label>
+            <input matInput placeholder="Nhập từ khoá">
+        </mat-form-field>
+    </div>
+    <div class="condition">
+        <mat-form-field [hideRequiredMarker]="false" [floatLabel]="'auto'">
+            <mat-select placeholder="Loại món ăn">
+                <mat-option>Trạng thái đơn hàng</mat-option>
+                <mat-option *ngFor="let status of BILL_STATUS |keyvalue" [value]="status?.value?.key">
+                    {{status?.value?.label}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Mã </th>
+            <td mat-cell *matCellDef="let element;" class='m-card-title'> {{element?.id}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <!-- <ng-container matColumnDef="user.displayName">
+            <th mat-header-cell *matHeaderCellDef> Tên người mua </th>
+            <td mat-cell *matCellDef="let element;"> {{element?.user?.displayName}} </td>
+        </ng-container> -->
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="user.email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email</th>
+            <td mat-cell *matCellDef="let element;let row" class='m-card-sub-title'>
+                {{element?.user?.email}}
+            </td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="user.phoneNumber">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Số điện thoại</th>
+            <td mat-cell *matCellDef="let element;let row"> {{element?.user?.phoneNumber}} </td>
+        </ng-container> -->
+
+        <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Địa chỉ</th>
+            <td mat-cell *matCellDef="let element;let row" class='m-card-sub-title'> {{element?.address}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalItem">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Số lượng</th>
+            <td mat-cell *matCellDef="let element;let row" class='m-card-sub-title'> {{element?.totalItem}} suất </td>
+        </ng-container>
+
+        <ng-container matColumnDef="payment">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Loại thanh toán</th>
+            <td mat-cell *matCellDef="let element;let row" class='m-card-sub-title'>
+                {{element?.payment === TRANS_TYPE.online ? 'Thanh toán online' : 'Tiền mặt'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Trạng thái đơn hàng</th>
+            <td mat-cell *matCellDef="let element;let row" class='m-card-sub-title'>
+                <ng-container [ngSwitch]="element?.status">
+
+                    <div *ngSwitchCase="BILL_STATUS.pending.key" class="color-grey">
+                        Đang chờ xác nhận
+                    </div>
+
+                    <div *ngSwitchCase="BILL_STATUS.accept.key" class="color-grey">
+                        Đã xác nhận
+                    </div>
+
+                    <div *ngSwitchCase="BILL_STATUS.transport.key" class="color-grey">
+                        Đang vận chuyển
+                    </div>
+
+                    <div *ngSwitchCase="BILL_STATUS.done.key" class="color-success">
+                        Đã giao hàng
+                    </div>
+
+                    <div *ngSwitchCase="BILL_STATUS.canceled.key" class="color-red">
+                        Đã huỷ
+                    </div>
+
+                </ng-container>
+
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="paymentStatus">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Trạng thái thanh toán</th>
+            <td mat-cell *matCellDef="let element;let row" class='m-card-sub-title'>
+                <ng-container [ngSwitch]="element?.paymentStatus">
+
+                    <div *ngSwitchCase="PAYMENT_STATUS.pending" class="color-grey">
+                        Chưa thanh toán
+                    </div>
+
+                    <div *ngSwitchCase="PAYMENT_STATUS.success" class="color-success">
+                        Đã thanh toán
+                    </div>
+
+                    <div *ngSwitchCase="PAYMENT_STATUS.canceled" class="color-red">
+                        Đã huỷ
+                    </div>
+
+                </ng-container>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class='has_label_on_mobile'> Thời gian</th>
+            <td mat-cell *matCellDef="let element;let row"> {{element?.date | date:'dd/MM/yyyy HH:mm'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+            <td mat-cell *matCellDef="let element;let row">
+                <button mat-raised-button class="fz-10">Xác nhận</button>
+                <button mat-raised-button color="warn" class="fz-10">Huỷ</button>
+
+            </td>
+
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 20,30,40]" showFirstLastButtons></mat-paginator>
+</div>

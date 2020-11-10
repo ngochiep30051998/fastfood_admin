@@ -13,12 +13,6 @@
                 <mat-option *ngFor="let cat of categories" [value]="cat?.key" >{{cat?.categoryName}}</mat-option>
             </mat-select>
         </mat-form-field>
-        <!-- <mat-form-field [hideRequiredMarker]="false" [floatLabel]="'auto'">
-            <mat-select placeholder="Nhà cung cấp" [(ngModel)]="filterParams.NhaCungCap">
-                <mat-option >Nhà cung cấp</mat-option>
-                <mat-option *ngFor="let provider of listProvider" [value]="provider?.Id">{{provider?.Ten}}</mat-option>
-            </mat-select>
-        </mat-form-field> -->
     </div>
     <div class="action">
         <button mat-raised-button color="primary" (click)="addProduct()" >Thêm</button>
@@ -30,13 +24,13 @@
         <!-- Position Column -->
         <ng-container matColumnDef="key">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Mã </th>
-            <td mat-cell *matCellDef="let element;"> {{element?.key}} </td>
+            <td mat-cell *matCellDef="let element;" class='m-card-title'> {{element?.key}} </td>
         </ng-container>
 
         <!-- Name Column -->
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Tên </th>
-            <td mat-cell *matCellDef="let element;"> {{element?.name}} </td>
+            <td mat-cell *matCellDef="let element;" class='m-card-title'> {{element?.name}} </td>
         </ng-container>
 
         <!-- Weight Column -->

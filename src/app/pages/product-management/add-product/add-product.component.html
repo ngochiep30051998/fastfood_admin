@@ -47,12 +47,14 @@
                     <mat-label>Giá khuyến mại</mat-label>
                     <input appInputNumber matInput placeholder="Giá khuyến mại" type="number"
                         formControlName="promotionPrice">
+                        <mat-error *ngIf="form?.controls?.promotionPrice.touched 
+                        && form?.controls?.promotionPrice?.invalid && 
+                        form.controls.promotionPrice?.errors?.mustLower">
+                            Giá khuyến mại phải nhỏ hơn giá sản phẩm
+                        </mat-error>
                 </mat-form-field>
-                <p class="error-text" *ngIf="form?.controls?.promotionPrice.touched 
-                            && form?.controls?.promotionPrice?.invalid && 
-                            form.controls.promotionPrice?.errors?.mustLower">
-                    Giá khuyến mại phải nhỏ hơn giá sản phẩm
-                </p>
+       
+
             </mat-grid-tile>
 
             <mat-grid-tile>
@@ -83,7 +85,10 @@
                 <div class="item-inner">
                     <img class="display-image" [src]="displayImage || 'assets/images/defaults/default-product.jpg'">
                 </div>
-                <button type="button" (click)="removeDisplayImage()">xoá</button>
+                <button mat-icon-button (click)="removeDisplayImage()" type="button" color="warn" aria-label="xoá">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                <!-- <button type="button" (click)="removeDisplayImage()">xoá</button> -->
             </div>
         </div>
 
@@ -98,7 +103,9 @@
                 <div class="item-inner">
                     <img class="display-image" [src]="url || 'assets/images/defaults/default-product.jpg'">
                 </div>
-                <button (click)="removePhoto(i,url)" type="button">xoá</button>
+                <button mat-icon-button (click)="removePhoto(i,url)" type="button" color="warn" aria-label="xoá">
+                    <mat-icon>delete</mat-icon>
+                  </button>
             </div>
         </div>
 

@@ -56,8 +56,8 @@ export class ProductManagementComponent implements OnInit {
     };
     this.dialog.open(AddProductComponent, {
       data,
-      minWidth: 600,
-      minHeight: 200,
+      width: '650px',
+      minHeight: '380px',
       autoFocus: false
     });
   }
@@ -68,8 +68,8 @@ export class ProductManagementComponent implements OnInit {
       };
       this.dialog.open(ModalDeleteProductComponent, {
         data,
-        minWidth: 600,
-        minHeight: 200,
+        width: '650px',
+        minHeight: '380px',
         autoFocus: false
       });
     } catch (e) {

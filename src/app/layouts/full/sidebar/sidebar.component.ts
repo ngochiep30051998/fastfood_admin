@@ -19,6 +19,8 @@ const MENUITEMS = [
   { state: 'trang-chu', name: 'Trang chủ', type: 'link', icon: 'av_timer' },
   { state: 'quan-ly-san-pham', type: 'link', name: 'Quản lý sản phẩm', icon: 'view_comfy' },
   { state: 'quan-ly-thuc-don', type: 'link', name: 'Quản lý thực đơn', icon: 'view_list' },
+  { state: 'quan-ly-don-hang', type: 'link', name: 'Quản lý đơn hàng', icon: 'view_list' },
+
 ];
 @Component({
   selector: 'app-sidebar',

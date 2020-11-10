@@ -186,4 +186,8 @@ export class FirebaseService {
   removeChildProduct(product: IProduct, child) {
     this.db.object(`categories/${product.catId}/products/${product.id}/${child}`).remove();
   }
+
+  getBills() {
+      return this.db.list(`bills/`).valueChanges();
+  }
 }

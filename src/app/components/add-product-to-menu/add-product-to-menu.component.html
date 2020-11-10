@@ -56,12 +56,13 @@
                 <mat-form-field [hideRequiredMarker]="false" [floatLabel]="'auto'">
                     <mat-label>Giá khuyến mại</mat-label>
                     <input appInputNumber matInput placeholder="Giá khuyến mại" type="number" formControlName="promotionPrice">
+                    <mat-error *ngIf="form?.controls?.promotionPrice.touched 
+                    && form?.controls?.promotionPrice?.invalid && 
+                    form.controls.promotionPrice?.errors?.mustLower">
+                        Giá khuyến mại phải nhỏ hơn giá sản phẩm
+                    </mat-error>
                 </mat-form-field>
-                <p class="error-text" *ngIf="form?.controls?.promotionPrice.touched 
-                                    && form?.controls?.promotionPrice?.invalid && 
-                                    form.controls.promotionPrice?.errors?.mustLower">
-                    Giá khuyến mại phải nhỏ hơn giá sản phẩm
-                </p>
+         
 
                 <mat-form-field [hideRequiredMarker]="false" [floatLabel]="'auto'">
                     <mat-label>Số lượng</mat-label>
