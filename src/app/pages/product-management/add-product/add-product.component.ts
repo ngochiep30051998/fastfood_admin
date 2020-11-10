@@ -105,7 +105,7 @@ export class AddProductComponent implements OnInit {
   onFileChange(event) {
     if (this.form.value.photos && this.form.value.photos._files && this.form.value.photos._files[0]) {
       const filesAmount = this.form.value.photos._files.length;
-      this.images = [];
+      // this.images = [];
       const orientation = DOC_ORIENTATION;
       for (let i = 0; i < filesAmount; i++) {
         const reader = new FileReader();
@@ -147,11 +147,14 @@ export class AddProductComponent implements OnInit {
       });
       res.update({ id: res.key });
       for (const photo of this.images) {
-        const name = Date.now().toString();
-        const upload = await this.storage.ref(`/products/${name}`).putString(photo.split(',')[1], 'base64');
-        upload.ref.getDownloadURL().then(url => {
-          this.firebaseService.getRef(`categories/${params.catId}/products/${res.key}/photos`).push(url);
-        });
+        if (photo.includes('base64')) {
+          const name = Date.now().toString();
+          const upload = await this.storage.ref(`/products/${name}`).putString(photo.split(',')[1], 'base64');
+          upload.ref.getDownloadURL().then(url => {
+            this.firebaseService.getRef(`categories/${params.catId}/products/${res.key}/photos`).push(url);
+          });
+
+        }
 
       }
       this.toastr.success('Thêm mới thành công');
@@ -194,12 +197,14 @@ export class AddProductComponent implements OnInit {
       }
       if (this.form.value.photos) {
         for (const photo of this.images) {
-          const name = Date.now().toString();
-          const task = this.storage.ref(`/products/${name}`).putString(photo.split(',')[1], 'base64').then(upload => {
-            upload.ref.getDownloadURL().then(url => {
-              this.firebaseService.getRef(`categories/${params.catId}/products/${this.dialogData.product.id}/photos`).push(url);
+          if(photo.includes('base64')){
+            const name = Date.now().toString();
+            const task = this.storage.ref(`/products/${name}`).putString(photo.split(',')[1], 'base64').then(upload => {
+              upload.ref.getDownloadURL().then(url => {
+                this.firebaseService.getRef(`categories/${params.catId}/products/${this.dialogData.product.id}/photos`).push(url);
+              });
             });
-          });
+          }
         }
       }
 
@@ -214,7 +219,7 @@ export class AddProductComponent implements OnInit {
   async removePhoto(index, path) {
     try {
       this.helperService.showLoading()
-      if (this.dialogData && this.dialogData.product) {
+      if (this.dialogData && this.dialogData.product && this.dialogData.product.photos[index]) {
         const key = this.dialogData.product.photos[index].key;
         await this.firebaseService.removePhotoFromProduct(this.dialogData.product, key);
         this.dialogData.product.photos.splice(index, 1);

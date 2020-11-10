@@ -150,7 +150,7 @@
 
             <ng-container matColumnDef="price">
                 <th mat-header-cell *matHeaderCellDef> Đơn giá </th>
-                <td mat-cell *matCellDef="let element" class="md-card-sub-title" class="text-decoration">
+                <td mat-cell *matCellDef="let element" class="md-card-sub-title" [ngClass]="{'text-decoration': element?.promotionPrice}">
                     {{element?.price|number}} VNĐ </td>
             </ng-container>
 
@@ -158,7 +158,13 @@
             <ng-container matColumnDef="promotionPrice">
                 <th mat-header-cell *matHeaderCellDef> Giảm giá </th>
                 <td mat-cell *matCellDef="let element" class="md-card-sub-title">
-                    {{(element?.promotionPrice || element?.price)|number}} VNĐ </td>
+                    <ng-container *ngIf="element?.promotionPrice">
+                        {{element?.promotionPrice |number}} VNĐ
+                    </ng-container>
+                    <ng-container *ngIf="!element?.promotionPrice">
+                        Không có khuyến mại
+                    </ng-container>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="amount">
