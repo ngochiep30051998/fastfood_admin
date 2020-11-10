@@ -1,15 +1,30 @@
 
-export interface IUser {
-    Id: number;
-    Username: string;
-    CreatedAt?: string;
-    UpdatedAt?: string;
-    IdRole: number;
-    RoleName: string;
+
+export interface IGoogleUser {
+    accessToken?: string;
+
+    displayName: string;
+
+    email: string;
+
+    familyName?: string;
+
+    givenName?: string;
+
+    idToken?: string;
+
+    imageUrl?: string;
+
+    refreshToken?: string;
+
+    serverAuthCode?: string;
+
+    userId?: string;
 }
 
-
-export interface IRole {
-    Id: number;
-    Name: string;
+export interface IUser extends IGoogleUser, firebase.UserInfo {
+    isAdmin?: boolean;
+    floor?: string;
+    cardNumber?: string;
+    transType?: string;
 }

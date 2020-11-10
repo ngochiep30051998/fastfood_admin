@@ -7,6 +7,9 @@ import { ComponentsModule } from '../../components/components.module';
 import { DemoMaterialModule } from '../../demo-material-module';
 import { DirectivesModule } from '../../directives/directives.module';
 import { BillDetailComponent } from './bill-detail/bill-detail.component';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { NGX_MAT_FILE_INPUT_CONFIG } from 'ngx-material-file-input';
+import { config } from 'process';
 
 
 
@@ -23,6 +26,14 @@ import { BillDetailComponent } from './bill-detail/bill-detail.component';
       path: '',
       component: BillsManagementComponent
     }])
+  ],
+  entryComponents: [
+    BillDetailComponent
+  ],
+  providers: [
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+    { provide: MatDialogRef, useValue: {} },
+    { provide: NGX_MAT_FILE_INPUT_CONFIG, useValue: config }
   ]
 })
 export class BillsManagementModule { }

@@ -1,3 +1,4 @@
+import { IBill } from './bill.interface';
 import { IPhoto } from './common.interface';
 
 export interface IProduct {
@@ -9,11 +10,12 @@ export interface IProduct {
     name?: string;
     photos?: IPhoto[];
     price?: number;
-    promotionPrice?: string;
+    promotionPrice?: number;
     detail?: string;
     amount?: number;
     unit?: string;
     meal?: string;
+    totalPrice?: number;
 }
 
 export interface ICategories {
@@ -26,5 +28,6 @@ export interface IPopupData {
     tab?: string;
     menuId?: string;
     product?: IProduct;
+    bill?: IBill;
     type?: string;
 }

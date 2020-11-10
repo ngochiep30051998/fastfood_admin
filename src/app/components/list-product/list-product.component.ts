@@ -40,7 +40,7 @@ export class ListProductComponent implements OnInit, OnChanges {
     };
     this.dialog.open(AddProductToMenuComponent, {
       data,
-      width: '650px',
+      width: '640px',
       minHeight: '380px',
       autoFocus: false
     });
@@ -54,7 +54,7 @@ export class ListProductComponent implements OnInit, OnChanges {
     };
     this.dialog.open(AddProductToMenuComponent, {
       data,
-      width: '650px',
+      width: '640px',
       minHeight: '380px',
       autoFocus: false
     });
@@ -67,7 +67,7 @@ export class ListProductComponent implements OnInit, OnChanges {
     };
     this.dialog.open(PopupRemoveProductComponent, {
       data,
-      width: '650px',
+      width: '640px',
       minHeight: '380px',
       autoFocus: false
     });

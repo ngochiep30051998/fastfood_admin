@@ -56,7 +56,7 @@ export class ProductManagementComponent implements OnInit {
     };
     this.dialog.open(AddProductComponent, {
       data,
-      width: '650px',
+      width: '640px',
       minHeight: '380px',
       autoFocus: false
     });
@@ -68,7 +68,7 @@ export class ProductManagementComponent implements OnInit {
       };
       this.dialog.open(ModalDeleteProductComponent, {
         data,
-        width: '650px',
+        width: '640px',
         minHeight: '380px',
         autoFocus: false
       });

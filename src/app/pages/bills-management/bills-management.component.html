@@ -2,12 +2,12 @@
     <div class="filter">
         <mat-form-field>
             <mat-label>Tìm kiếm</mat-label>
-            <input matInput placeholder="Nhập từ khoá">
+            <input matInput placeholder="Nhập từ khoá" [(ngModel)]="txtSearch" (keyup)="applyFilter($event)">
         </mat-form-field>
     </div>
     <div class="condition">
-        <mat-form-field [hideRequiredMarker]="false" [floatLabel]="'auto'">
-            <mat-select placeholder="Loại món ăn">
+        <mat-form-field [hideRequiredMarker]="false" [floatLabel]="'auto'" >
+            <mat-select placeholder="Trạng thái đơn hàng" [(ngModel)]="status" (ngModelChange)="onChangeSelect()">
                 <mat-option>Trạng thái đơn hàng</mat-option>
                 <mat-option *ngFor="let status of BILL_STATUS |keyvalue" [value]="status?.value?.key">
                     {{status?.value?.label}}</mat-option>
@@ -32,7 +32,7 @@
         </ng-container> -->
 
         <!-- Weight Column -->
-        <ng-container matColumnDef="user.email">
+        <ng-container matColumnDef="email">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Email</th>
             <td mat-cell *matCellDef="let element;let row" class='m-card-sub-title'>
                 {{element?.user?.email}}
@@ -110,20 +110,18 @@
         </ng-container>
         <ng-container matColumnDef="date">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class='has_label_on_mobile'> Thời gian</th>
-            <td mat-cell *matCellDef="let element;let row"> {{element?.date | date:'dd/MM/yyyy HH:mm'}} </td>
+            <td mat-cell *matCellDef="let element;let row"> {{element?.date | date:'dd-MM-yyyy HH:mm'}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="action">
+        <!-- <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
             <td mat-cell *matCellDef="let element;let row">
-                <button mat-raised-button class="fz-10">Xác nhận</button>
-                <button mat-raised-button color="warn" class="fz-10">Huỷ</button>
-
+                <button mat-raised-button class="fz-10">Chi tiết</button>
             </td>
 
-        </ng-container>
+        </ng-container> -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openDetail(row)"></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[10, 20,30,40]" showFirstLastButtons></mat-paginator>

@@ -207,6 +207,9 @@
     }
   
     }
+    td{
+      font-size: 13px;
+    }
   }
   @import "~@angular/material/prebuilt-themes/indigo-pink.css";
   @media only screen and (max-width: 700px) {
@@ -224,4 +227,9 @@
     .modal .mat-raised-button.mat-warn {
       margin:5px
     }
+  }
+
+  .txt-bold{
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
   }

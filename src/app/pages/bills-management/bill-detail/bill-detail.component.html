@@ -1,1 +1,179 @@
-<p>bill-detail works!</p>
+<div class="flex-end">
+    <mat-icon mat-dialog-close class="pointer">close</mat-icon>
+</div>
+<mat-dialog-content>
+
+    <mat-grid-list cols="1" rowHeight="40px">
+        <mat-grid-tile>
+            <h4>Thông tin đơn hàng</h4>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <mat-card>
+        <table>
+            <tr>
+                <td class="txt-bold">Tên: </td>
+                <td> {{dialogData?.bill?.user?.displayName}}</td>
+            </tr>
+            <tr>
+                <td class="txt-bold">Email: </td>
+                <td> {{dialogData?.bill?.user?.email}}</td>
+            </tr>
+            <tr *ngIf="dialogData?.bill?.user?.phoneNumber">
+                <td class="txt-bold">Số điện thoại: </td>
+                <td> {{dialogData?.bill?.user?.phoneNumber}}</td>
+            </tr>
+
+            <tr>
+                <td class="txt-bold">Địa chỉ nhận hàng: </td>
+                <td> {{dialogData?.bill?.address}}</td>
+            </tr>
+            <tr>
+                <td class="txt-bold" *ngIf="dialogData?.bill?.notes">Ghi chú: </td>
+                <td> {{dialogData?.bill?.notes}}</td>
+            </tr>
+            <tr>
+                <td class="txt-bold">Số lượng: </td>
+                <td> {{dialogData?.bill?.totalItem  |number}}</td>
+            </tr>
+            <tr>
+                <td class="txt-bold">Tổng tiền: </td>
+                <td> {{dialogData?.bill?.totalPrice |number}} VNĐ</td>
+            </tr>
+
+            <tr *ngIf="dialogData?.bill?.vnpayTransId">
+                <td class="txt-bold">Mã giao dịch online: </td>
+                <td> {{dialogData?.bill?.vnpayTransId}}</td>
+            </tr>
+            <tr>
+                <td class="txt-bold">Hình thức thanh toán: </td>
+                <td> {{dialogData?.bill?.payment === TRANS_TYPE.online ? 'Thanh toán online' : 'Tiền mặt'}} </td>
+            </tr>
+
+            <tr>
+                <td class="txt-bold">Trạng thái đơn hàng: </td>
+                <td class='m-card-sub-title'>
+                    <ng-container [ngSwitch]="dialogData?.bill?.status">
+
+                        <div *ngSwitchCase="BILL_STATUS.pending.key" class="color-grey">
+                            Đang chờ xác nhận
+                        </div>
+
+                        <div *ngSwitchCase="BILL_STATUS.accept.key" class="color-grey">
+                            Đã xác nhận
+                        </div>
+
+                        <div *ngSwitchCase="BILL_STATUS.transport.key" class="color-grey">
+                            Đang vận chuyển
+                        </div>
+
+                        <div *ngSwitchCase="BILL_STATUS.done.key" class="color-success">
+                            Đã giao hàng
+                        </div>
+
+                        <div *ngSwitchCase="BILL_STATUS.canceled.key" class="color-red">
+                            Đã huỷ
+                        </div>
+
+                    </ng-container>
+
+                </td>
+            </tr>
+            <tr>
+                <td class="txt-bold">Trạng thái thanh toán: </td>
+                <td class='m-card-sub-title'>
+                    <ng-container [ngSwitch]="dialogData?.bill?.paymentStatus">
+
+                        <div *ngSwitchCase="PAYMENT_STATUS.pending" class="color-grey">
+                            Chưa thanh toán
+                        </div>
+
+                        <div *ngSwitchCase="PAYMENT_STATUS.success" class="color-success">
+                            Đã thanh toán
+                        </div>
+
+                        <div *ngSwitchCase="PAYMENT_STATUS.canceled" class="color-red">
+                            Đã huỷ
+                        </div>
+
+                    </ng-container>
+                </td>
+            </tr>
+            <tr>
+                <td class="txt-bold">Thời gian: </td>
+                <td> {{dialogData?.bill?.date |date:'dd-MM-yyyy HH:mm'}}</td>
+            </tr>
+        </table>
+        <mat-card-actions>
+            <button mat-raised-button color="warn"
+                *ngIf="dialogData?.bill?.status !== BILL_STATUS.done.key && dialogData?.bill?.status !== BILL_STATUS.canceled.key">
+                Huỷ
+            </button>
+            <button mat-raised-button color="primary" *ngIf="dialogData?.bill?.status === BILL_STATUS.pending.key">Xác
+                nhận</button>
+            <button mat-raised-button color="primary" *ngIf="dialogData?.bill?.status === BILL_STATUS.accept.key">Vận
+                chuyển</button>
+            <button mat-raised-button color="primary"
+                *ngIf="dialogData?.bill?.status === BILL_STATUS.transport.key">Hoàn thành</button>
+
+
+        </mat-card-actions>
+    </mat-card>
+    <mat-card>
+        <mat-card-title>Danh sách sản phẩm</mat-card-title>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> Mã </th>
+                <td mat-cell *matCellDef="let element" class="m-card-title"> {{element?.id}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Tên sản phẩm </th>
+                <td mat-cell *matCellDef="let element" class="md-card-sub-title"> {{element?.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="catName">
+                <th mat-header-cell *matHeaderCellDef> Loại sản phẩm </th>
+                <td mat-cell *matCellDef="let element" class="md-card-sub-title"> {{element?.catName}} </td>
+            </ng-container>
+
+
+
+            <ng-container matColumnDef="unit">
+                <th mat-header-cell *matHeaderCellDef> Đơn vị tính </th>
+                <td mat-cell *matCellDef="let element" class="md-card-sub-title"> {{element?.unit || 'suất'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef> Đơn giá </th>
+                <td mat-cell *matCellDef="let element" class="md-card-sub-title" class="text-decoration">
+                    {{element?.price|number}} VNĐ </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="promotionPrice">
+                <th mat-header-cell *matHeaderCellDef> Giảm giá </th>
+                <td mat-cell *matCellDef="let element" class="md-card-sub-title">
+                    {{(element?.promotionPrice || element?.price)|number}} VNĐ </td>
+            </ng-container>
+
+            <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef> Số lượng </th>
+                <td mat-cell *matCellDef="let element" class="md-card-sub-title"> {{element?.amount |number}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalPrice">
+                <th mat-header-cell *matHeaderCellDef> Thành tiền </th>
+                <td mat-cell *matCellDef="let element" class="md-card-sub-title"> {{element?.totalPrice |number}} VNĐ
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </mat-card>
+</mat-dialog-content>
