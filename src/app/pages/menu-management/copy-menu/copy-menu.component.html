@@ -1,0 +1,47 @@
+<div class="flex-end">
+    <mat-icon mat-dialog-close class="pointer">close</mat-icon>
+</div>
+<mat-dialog-content>
+    <mat-grid-list cols="1" rowHeight="30px">
+        <mat-grid-tile>
+            <h4>Sao chép thực đơn</h4>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <form class="example-form" [formGroup]="form">
+        <mat-grid-list cols="1" rowHeight="80px">
+            <mat-grid-tile>
+                <mat-form-field appearance="fill" class="demo-full-width">
+                    <mat-label>Nguồn</mat-label>
+                    <input matInput [matDatepicker]="dp" formControlName="fromDate">
+                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                    <mat-datepicker #dp></mat-datepicker>
+                </mat-form-field>
+            </mat-grid-tile>
+
+
+
+        </mat-grid-list>
+
+        <mat-grid-list cols="1" rowHeight="80px">
+            <mat-grid-tile>
+                <mat-form-field appearance="fill" class="demo-full-width">
+                    <mat-label>Đích</mat-label>
+                    <input matInput [matDatepicker]="dp2" formControlName="toDate">
+                    <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+                    <mat-datepicker #dp2></mat-datepicker>
+                </mat-form-field>
+            </mat-grid-tile>
+
+
+
+        </mat-grid-list>
+
+
+    </form>
+</mat-dialog-content>
+
+<div class="flex-end">
+    <button mat-raised-button color="primary" [disabled]='loading' (click)="copy()">
+        Sao chép
+    </button>
+</div>

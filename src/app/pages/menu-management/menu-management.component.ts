@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { DateAdapter } from '@angular/material';
+import { DateAdapter, MatDialog } from '@angular/material';
 
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { IMenu } from '../../interfaces/menu.interfaces';
 import { FirebaseService } from '../../services/firebase/firebase.service';
+import { CopyMenuComponent } from './copy-menu/copy-menu.component';
 
 @Component({
   selector: 'app-menu-management',
@@ -18,7 +19,8 @@ export class MenuManagementComponent implements OnInit, OnDestroy {
   public menuSub$: Subscription;
   constructor(
     private _adapter: DateAdapter<any>,
-    private firebaseService: FirebaseService
+    private firebaseService: FirebaseService,
+    public dialog: MatDialog,
   ) {
     this.changeDate();
   }
@@ -27,7 +29,7 @@ export class MenuManagementComponent implements OnInit, OnDestroy {
   }
 
   getDate() {
-    const date = moment(this.date).format('DD/MM/YYYY')
+    const date = moment(this.date).format('DD/MM/YYYY');
     console.log(date)
   }
 
@@ -36,6 +38,14 @@ export class MenuManagementComponent implements OnInit, OnDestroy {
     this.menuSub$ = this.firebaseService.getMenu(id).subscribe((res) => {
       console.log(res);
       this.menu = res;
+    });
+  }
+
+  copyMenu() {
+    this.dialog.open(CopyMenuComponent, {
+      width: '350px',
+      height: '300px',
+      autoFocus: false
     });
   }
   ngOnDestroy() {

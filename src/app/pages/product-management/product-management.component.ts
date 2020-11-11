@@ -68,8 +68,8 @@ export class ProductManagementComponent implements OnInit {
       };
       this.dialog.open(ModalDeleteProductComponent, {
         data,
-        width: '640px',
-        minHeight: '380px',
+        width: '350px',
+        height: '200px',
         autoFocus: false
       });
     } catch (e) {

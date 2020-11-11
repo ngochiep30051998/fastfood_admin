@@ -217,4 +217,10 @@ export class FirebaseService {
     });
   }
 
+  getMenuByDate(date) {
+    return this.db.object(`/menus/${date}`).valueChanges();
+  }
+  copyMenu(date, menu) {
+    return this.db.object(`/menus/${date}`).set(menu);
+  }
 }

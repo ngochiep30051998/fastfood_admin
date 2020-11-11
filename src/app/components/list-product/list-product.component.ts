@@ -67,8 +67,8 @@ export class ListProductComponent implements OnInit, OnChanges {
     };
     this.dialog.open(PopupRemoveProductComponent, {
       data,
-      width: '640px',
-      minHeight: '380px',
+      width: '350px',
+      height: '250px',
       autoFocus: false
     });
   }

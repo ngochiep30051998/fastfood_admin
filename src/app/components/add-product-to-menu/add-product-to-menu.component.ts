@@ -31,7 +31,7 @@ export class AddProductToMenuComponent implements OnInit {
       category: ['', Validators.required],
       search: [''],
       productId: [{ value: '', disabled: true }],
-      productName: [{ value: '', disabled: true }],
+      productName: ['',Validators.required],
       detail: [''],
       price: ['', Validators.required],
       promotionPrice: [''],
@@ -117,6 +117,7 @@ export class AddProductToMenuComponent implements OnInit {
       const product: IProduct = await this.firebaseService.getProductById(this.form.value.category, this.product.id);
       product.amount = Number(this.form.value.amount);
       product.price = this.form.value.price;
+      product.name = this.form.value.productName;
       if (this.form.value.promotionPrice) {
         product.promotionPrice = this.form.value.promotionPrice;
 
@@ -152,6 +153,7 @@ export class AddProductToMenuComponent implements OnInit {
       this.loading = true;
       const product: IProduct = await this.firebaseService.getProductById(this.form.value.category, this.product.id);
       product.amount = Number(this.form.value.amount);
+      product.name = this.form.value.productName;
       product.price = this.form.value.price;
       if (this.form.value.promotionPrice) {
         product.promotionPrice = this.form.value.promotionPrice;

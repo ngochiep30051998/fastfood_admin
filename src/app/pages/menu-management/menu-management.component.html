@@ -6,15 +6,8 @@
             <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
             <mat-datepicker #dp></mat-datepicker>
         </mat-form-field>
-
-        <!-- <mat-form-field class="demo-full-width">
-            <mat-label>Chọn ngày</mat-label>
-            <input matInput [matDatepicker]="picker" placeholder="Date of birth" [(ngModel)]="date" (ngModelChange)="changeDate()">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker touchUi="true" #picker></mat-datepicker>
-        </mat-form-field> -->
+        <button mat-raised-button color="primary" (click)="copyMenu()">Sao chép thực đơn</button>
     </div>
-
 </div>
 
 <mat-card>
