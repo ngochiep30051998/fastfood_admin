@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -9,13 +9,14 @@ import { ICategories, IPopupData, IProduct } from '../../../interfaces/products.
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { HelperService } from '../../../services/helper/helper.service';
 import { finalize, tap } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.scss']
 })
-export class AddProductComponent implements OnInit {
+export class AddProductComponent implements OnInit, OnDestroy {
   public categories: ICategories[] = [];
   public form: FormGroup;
   public loading: boolean;
@@ -26,6 +27,8 @@ export class AddProductComponent implements OnInit {
     * In this example, it's 2 MB (=2 * 2 ** 20).
     */
   readonly maxSize = 0.5 * 2 ** 20;
+  private catSub$: Subscription;
+
   constructor(
     public dialogRef: MatDialogRef<AddProductComponent>,
     private firebaseService: FirebaseService,
@@ -37,7 +40,7 @@ export class AddProductComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dialogData: IPopupData,
   ) {
     this.initForm();
-    this.firebaseService.getCategories().subscribe((res: any) => {
+    this.catSub$ = this.firebaseService.getCategories().subscribe((res: any) => {
       this.categories = res;
     });
     this.patchValue();
@@ -197,7 +200,7 @@ export class AddProductComponent implements OnInit {
       }
       if (this.form.value.photos) {
         for (const photo of this.images) {
-          if(photo.includes('base64')){
+          if (photo.includes('base64')) {
             const name = Date.now().toString();
             const task = this.storage.ref(`/products/${name}`).putString(photo.split(',')[1], 'base64').then(upload => {
               upload.ref.getDownloadURL().then(url => {
@@ -251,6 +254,12 @@ export class AddProductComponent implements OnInit {
     } finally {
       this.helperService.hideLoading();
     }
+  }
+  ngOnDestroy(): void {
+    if (this.catSub$) {
+      this.catSub$.unsubscribe();
+    }
+
   }
 }
 

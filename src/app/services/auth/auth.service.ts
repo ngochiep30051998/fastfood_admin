@@ -75,4 +75,18 @@ export class AuthService {
       });
     });
   }
+
+  getResultToken() {
+    return new Promise((resolve, reject) => {
+      return this.angularFireAuth.idTokenResult.subscribe(res => {
+        resolve(res);
+      }, err => {
+        reject(err);
+      });
+    });
+  }
+
+  getIdToken() {
+    return this.angularFireAuth.auth.currentUser.getIdToken();
+  }
 }

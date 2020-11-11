@@ -19,10 +19,10 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.angularFireAuth.user.pipe(
+    return this.angularFireAuth.idTokenResult.pipe(
       take(1),
-      map((user: User) => {
-        if (user) {
+      map((idTokenResult: any) => {
+        if (idTokenResult && idTokenResult.claims && idTokenResult.claims.isAdmin) {
           return true;
         }
         this.router.navigate(['/dang-nhap'], { queryParams: { returnUrl: state.url } });

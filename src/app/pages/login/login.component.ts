@@ -38,8 +38,9 @@ export class LoginComponent implements OnInit {
         return;
       }
       this.loading = true;
-      const res: any = await this.authService.login(this.loginForm.value);
-      console.log(res.user);
+      const res = await this.authService.login(this.loginForm.value);
+      // const tokenResult = await res.user.getIdTokenResult();
+      // console.log(tokenResult);
       this.router.navigate(['/trang-chu']);
     } catch (err) {
       console.log(err);

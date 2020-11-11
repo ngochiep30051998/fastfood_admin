@@ -1,6 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
+import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BILL_STATUS, PAYMENT_STATUS, TRANS_TYPE } from '../../constants/constants';
 import { IBill } from '../../interfaces/bill.interface';
@@ -13,7 +14,7 @@ import { BillDetailComponent } from './bill-detail/bill-detail.component';
   templateUrl: './bills-management.component.html',
   styleUrls: ['./bills-management.component.scss']
 })
-export class BillsManagementComponent implements OnInit {
+export class BillsManagementComponent implements OnInit, OnDestroy {
   public BILL_STATUS = BILL_STATUS;
   public TRANS_TYPE = TRANS_TYPE;
   public PAYMENT_STATUS = PAYMENT_STATUS;
@@ -29,7 +30,7 @@ export class BillsManagementComponent implements OnInit {
   public allData: IBill[] = [];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-
+  private billSub$: Subscription;
   constructor(
     private firebaseService: FirebaseService,
     public dialog: MatDialog,
@@ -42,7 +43,7 @@ export class BillsManagementComponent implements OnInit {
   }
 
   getBills() {
-    this.firebaseService.getBills().pipe(
+    this.billSub$ = this.firebaseService.getBills().pipe(
       map(x => x.map((bill: any) => {
         return { ...bill, email: bill.user && bill.user.email };
       }))
@@ -86,5 +87,10 @@ export class BillsManagementComponent implements OnInit {
       minHeight: '380px',
       autoFocus: false
     });
+  }
+  ngOnDestroy() {
+    if (this.billSub$) {
+      this.billSub$.unsubscribe();
+    }
   }
 }

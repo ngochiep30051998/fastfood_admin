@@ -1,6 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { Subscription } from 'rxjs';
 import { ICategories, IPopupData, IProduct } from '../../interfaces/products.interface';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { AddProductComponent } from './add-product/add-product.component';
@@ -11,7 +12,7 @@ import { ModalDeleteProductComponent } from './modal-delete-product/modal-delete
   templateUrl: './product-management.component.html',
   styleUrls: ['./product-management.component.scss']
 })
-export class ProductManagementComponent implements OnInit {
+export class ProductManagementComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [
     'key', 'name', 'displayImage', 'catName', 'action'
@@ -26,7 +27,7 @@ export class ProductManagementComponent implements OnInit {
   public allData: IProduct[] = [];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-
+  private catSub$: Subscription;
   constructor(
     private firebaseService: FirebaseService,
     public dialog: MatDialog,
@@ -40,7 +41,7 @@ export class ProductManagementComponent implements OnInit {
   }
 
   getCategories() {
-    this.firebaseService.getCategories().subscribe(res => {
+    this.catSub$ = this.firebaseService.getCategories().subscribe(res => {
       this.categories = res;
       this.allData = res.reduce((accumulator, currentValue) => {
         return accumulator.concat(currentValue.products);
@@ -95,5 +96,12 @@ export class ProductManagementComponent implements OnInit {
       this.dataSource.data = this.allData;
     }
     this.dataSource.filter = this.txtSearch.trim().toLowerCase();
+  }
+
+  ngOnDestroy(): void {
+    if (this.catSub$) {
+      this.catSub$.unsubscribe();
+    }
+
   }
 }

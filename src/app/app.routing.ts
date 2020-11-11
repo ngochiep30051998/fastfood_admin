@@ -30,6 +30,10 @@ export const AppRoutes: Routes = [
         path: 'quan-ly-don-hang',
         loadChildren: () => import('./pages/bills-management/bills-management.module').then(m => m.BillsManagementModule)
       },
+      {
+        path: 'quan-ly-nguoi-dung',
+        loadChildren: () => import('./pages/user-management/user-management.module').then(m => m.UserManagementModule)
+      },
       { path: '**', redirectTo: 'dang-nhap', pathMatch: 'full' },
     ]
   },
