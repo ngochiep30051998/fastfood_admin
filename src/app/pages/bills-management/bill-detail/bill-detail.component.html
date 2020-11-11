@@ -112,12 +112,14 @@
             </tr>
         </table>
         <mat-card-actions>
+            <div class="clear"></div>
             <button mat-raised-button color="success" *ngIf="billDetail?.paymentStatus !== PAYMENT_STATUS.success"
                 (click)="payment(PAYMENT_STATUS.success)">Thanh toán</button>
+            <button mat-raised-button color="warn" *ngIf="billDetail?.paymentStatus === PAYMENT_STATUS.success"
+                (click)="payment(PAYMENT_STATUS.canceled)">Hoàn tiền</button>
 
-            <button mat-raised-button color="warn" *ngIf="billDetail?.paymentStatus === PAYMENT_STATUS.success" (click)="payment(PAYMENT_STATUS.canceled)">Hoàn tiền</button>
-
-            <button mat-raised-button color="primary" *ngIf="billDetail?.status === BILL_STATUS.pending.key || billDetail?.status === BILL_STATUS.canceled.key"
+            <button mat-raised-button color="primary"
+                *ngIf="billDetail?.status === BILL_STATUS.pending.key || billDetail?.status === BILL_STATUS.canceled.key"
                 (click)="updateStatus(BILL_STATUS.accept.key)">Xác
                 nhận</button>
             <button mat-raised-button color="primary" *ngIf="billDetail?.status === BILL_STATUS.accept.key"
@@ -128,7 +130,7 @@
 
             <button mat-raised-button color="warn" (click)="updateStatus(BILL_STATUS.canceled.key)"
                 *ngIf="billDetail?.status !== BILL_STATUS.done.key && billDetail?.status !== BILL_STATUS.canceled.key">
-                Huỷ
+                Huỷ đơn
             </button>
         </mat-card-actions>
     </mat-card>
