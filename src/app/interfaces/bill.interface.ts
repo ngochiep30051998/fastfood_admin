@@ -15,4 +15,6 @@ export interface IBill {
     paymentStatus?: string;
     id?: string;
     vnpayTransId?: string;
+    updatedAt?: any;
+    staff?: IUser;
 }

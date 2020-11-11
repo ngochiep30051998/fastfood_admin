@@ -3,6 +3,7 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MatPaginator, MatSort, MatTableDataSource, MAT_DIALOG_DATA } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { BILL_STATUS, PAYMENT_STATUS, TRANS_TYPE } from '../../../constants/constants';
+import { IBill } from '../../../interfaces/bill.interface';
 import { IPopupData, IProduct } from '../../../interfaces/products.interface';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { HelperService } from '../../../services/helper/helper.service';
@@ -26,6 +27,8 @@ export class BillDetailComponent implements OnInit {
   public BILL_STATUS = BILL_STATUS;
   public PAYMENT_STATUS = PAYMENT_STATUS;
   public TRANS_TYPE = TRANS_TYPE;
+  public billDetail: IBill;
+
   constructor(
     public dialogRef: MatDialogRef<BillDetailComponent>,
     private firebaseService: FirebaseService,
@@ -33,16 +36,54 @@ export class BillDetailComponent implements OnInit {
     private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public dialogData: IPopupData,
   ) {
-    console.log(this.dialogData.bill)
+    this.billDetail = this.dialogData.bill;
+    console.log(this.billDetail);
+    this.dataSource.data = this.billDetail.products.map(product => {
+      product.totalPrice = product.promotionPrice ? product.promotionPrice * product.amount : product.price * product.amount;
+      return product;
+    });
+    // this.firebaseService.getBillDetail(this.dialogData.bill.id).subscribe((bill: IBill) => {
+    //   this.billDetail = bill;
+    //   console.log(this.billDetail);
+    //   this.dataSource.data = this.billDetail.products.map(product => {
+    //     product.totalPrice = product.promotionPrice ? product.promotionPrice * product.amount : product.price * product.amount;
+    //     return product;
+    //   });
+    // });
   }
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.dataSource.data = this.dialogData.bill.products.map(product => {
-      product.totalPrice = product.promotionPrice ? product.promotionPrice * product.amount : product.price * product.amount;
-      return product;
-    })
+
+  }
+
+  async updateStatus(status: string) {
+    try {
+      this.helperService.showLoading();
+      this.billDetail.status = status;
+      const update = await this.firebaseService.updateBill({...this.billDetail});
+      this.toastr.success('Cập nhật thành công');
+    } catch (e) {
+      console.log(e);
+      this.toastr.error('Cập nhật thất bại');
+    } finally {
+      this.helperService.hideLoading();
+    }
+  }
+
+  async payment(status: string) {
+    try {
+      this.helperService.showLoading();
+      this.billDetail.paymentStatus = status;
+      const update = await this.firebaseService.updateBill({...this.billDetail});
+      this.toastr.success('Cập nhật thành công');
+    } catch (e) {
+      console.log(e);
+      this.toastr.error('Cập nhật thất bại');
+    } finally {
+      this.helperService.hideLoading();
+    }
   }
 
 }

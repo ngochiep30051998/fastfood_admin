@@ -5,6 +5,10 @@ import { IMenu } from '../../interfaces/menu.interfaces';
 import { IProduct } from '../../interfaces/products.interface';
 import { HelperService } from '../helper/helper.service';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
+import { IBill } from '../../interfaces/bill.interface';
+import * as firebase from 'firebase';
+import { AuthService } from '../auth/auth.service';
+import { IUser } from '../../interfaces/user.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,6 +18,7 @@ export class FirebaseService {
     private db: AngularFireDatabase,
     private helperService: HelperService,
     public storage: AngularFireStorage,
+    public authService: AuthService,
   ) { }
 
   getRef(ref) {
@@ -188,6 +193,28 @@ export class FirebaseService {
   }
 
   getBills() {
-      return this.db.list(`bills/`).valueChanges();
+    return this.db.list(`bills/`).valueChanges();
   }
+
+  getBillDetail(id) {
+    return this.db.object(`bills/${id}`).valueChanges();
+  }
+  async updateBill(bill: IBill) {
+    bill.updatedAt = firebase.database.ServerValue.TIMESTAMP;
+    const user: IUser = await this.authService.getCurrentUser();
+    const moreInfo: any = await this.getUserInfo(user.uid);
+    bill.staff = { ...moreInfo, ...user };
+    return this.db.object(`bills/${bill.id}`).update(bill);
+  }
+
+  getUserInfo(uId) {
+    return new Promise((resolve, reject) => {
+      return this.db.object(`userInfo/${uId}`).valueChanges().subscribe(res => {
+        resolve(res);
+      }, err => {
+        reject(err);
+      });
+    });
+  }
+
 }

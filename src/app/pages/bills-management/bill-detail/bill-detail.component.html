@@ -12,47 +12,47 @@
         <table>
             <tr>
                 <td class="txt-bold">Tên: </td>
-                <td> {{dialogData?.bill?.user?.displayName}}</td>
+                <td> {{billDetail?.user?.displayName}}</td>
             </tr>
             <tr>
                 <td class="txt-bold">Email: </td>
-                <td> {{dialogData?.bill?.user?.email}}</td>
+                <td> {{billDetail?.user?.email}}</td>
             </tr>
-            <tr *ngIf="dialogData?.bill?.user?.phoneNumber">
+            <tr *ngIf="billDetail?.user?.phoneNumber">
                 <td class="txt-bold">Số điện thoại: </td>
-                <td> {{dialogData?.bill?.user?.phoneNumber}}</td>
+                <td> {{billDetail?.user?.phoneNumber}}</td>
             </tr>
 
             <tr>
                 <td class="txt-bold">Địa chỉ nhận hàng: </td>
-                <td> {{dialogData?.bill?.address}}</td>
+                <td> {{billDetail?.address}}</td>
             </tr>
             <tr>
-                <td class="txt-bold" *ngIf="dialogData?.bill?.notes">Ghi chú: </td>
-                <td> {{dialogData?.bill?.notes}}</td>
+                <td class="txt-bold" *ngIf="billDetail?.notes">Ghi chú: </td>
+                <td> {{billDetail?.notes}}</td>
             </tr>
             <tr>
                 <td class="txt-bold">Số lượng: </td>
-                <td> {{dialogData?.bill?.totalItem  |number}}</td>
+                <td> {{billDetail?.totalItem  |number}}</td>
             </tr>
             <tr>
                 <td class="txt-bold">Tổng tiền: </td>
-                <td> {{dialogData?.bill?.totalPrice |number}} VNĐ</td>
+                <td> {{billDetail?.totalPrice |number}} VNĐ</td>
             </tr>
 
-            <tr *ngIf="dialogData?.bill?.vnpayTransId">
+            <tr *ngIf="billDetail?.vnpayTransId">
                 <td class="txt-bold">Mã giao dịch online: </td>
-                <td> {{dialogData?.bill?.vnpayTransId}}</td>
+                <td> {{billDetail?.vnpayTransId}}</td>
             </tr>
             <tr>
                 <td class="txt-bold">Hình thức thanh toán: </td>
-                <td> {{dialogData?.bill?.payment === TRANS_TYPE.online ? 'Thanh toán online' : 'Tiền mặt'}} </td>
+                <td> {{billDetail?.payment === TRANS_TYPE.online ? 'Thanh toán online' : 'Tiền mặt'}} </td>
             </tr>
 
             <tr>
                 <td class="txt-bold">Trạng thái đơn hàng: </td>
                 <td class='m-card-sub-title'>
-                    <ng-container [ngSwitch]="dialogData?.bill?.status">
+                    <ng-container [ngSwitch]="billDetail?.status">
 
                         <div *ngSwitchCase="BILL_STATUS.pending.key" class="color-grey">
                             Đang chờ xác nhận
@@ -81,7 +81,7 @@
             <tr>
                 <td class="txt-bold">Trạng thái thanh toán: </td>
                 <td class='m-card-sub-title'>
-                    <ng-container [ngSwitch]="dialogData?.bill?.paymentStatus">
+                    <ng-container [ngSwitch]="billDetail?.paymentStatus">
 
                         <div *ngSwitchCase="PAYMENT_STATUS.pending" class="color-grey">
                             Chưa thanh toán
@@ -92,7 +92,7 @@
                         </div>
 
                         <div *ngSwitchCase="PAYMENT_STATUS.canceled" class="color-red">
-                            Đã huỷ
+                            Đã hoàn tiền
                         </div>
 
                     </ng-container>
@@ -100,22 +100,36 @@
             </tr>
             <tr>
                 <td class="txt-bold">Thời gian: </td>
-                <td> {{dialogData?.bill?.date |date:'dd-MM-yyyy HH:mm'}}</td>
+                <td> {{billDetail?.date |date:'dd-MM-yyyy HH:mm'}}</td>
+            </tr>
+            <tr *ngIf="billDetail?.updatedAt">
+                <td class="txt-bold">Thời gian cập nhật: </td>
+                <td> {{billDetail?.updatedAt |date:'dd-MM-yyyy HH:mm'}}</td>
+            </tr>
+            <tr *ngIf="billDetail?.staff">
+                <td class="txt-bold">Người cập nhật: </td>
+                <td> {{billDetail?.staff?.displayName}}</td>
             </tr>
         </table>
         <mat-card-actions>
-            <button mat-raised-button color="warn"
-                *ngIf="dialogData?.bill?.status !== BILL_STATUS.done.key && dialogData?.bill?.status !== BILL_STATUS.canceled.key">
+            <button mat-raised-button color="success" *ngIf="billDetail?.paymentStatus !== PAYMENT_STATUS.success"
+                (click)="payment(PAYMENT_STATUS.success)">Thanh toán</button>
+
+            <button mat-raised-button color="warn" *ngIf="billDetail?.paymentStatus === PAYMENT_STATUS.success" (click)="payment(PAYMENT_STATUS.canceled)">Hoàn tiền</button>
+
+            <button mat-raised-button color="primary" *ngIf="billDetail?.status === BILL_STATUS.pending.key || billDetail?.status === BILL_STATUS.canceled.key"
+                (click)="updateStatus(BILL_STATUS.accept.key)">Xác
+                nhận</button>
+            <button mat-raised-button color="primary" *ngIf="billDetail?.status === BILL_STATUS.accept.key"
+                (click)="updateStatus(BILL_STATUS.transport.key)">Vận
+                chuyển</button>
+            <button mat-raised-button color="primary" *ngIf="billDetail?.status === BILL_STATUS.transport.key"
+                (click)="updateStatus(BILL_STATUS.done.key)">Hoàn thành</button>
+
+            <button mat-raised-button color="warn" (click)="updateStatus(BILL_STATUS.canceled.key)"
+                *ngIf="billDetail?.status !== BILL_STATUS.done.key && billDetail?.status !== BILL_STATUS.canceled.key">
                 Huỷ
             </button>
-            <button mat-raised-button color="primary" *ngIf="dialogData?.bill?.status === BILL_STATUS.pending.key">Xác
-                nhận</button>
-            <button mat-raised-button color="primary" *ngIf="dialogData?.bill?.status === BILL_STATUS.accept.key">Vận
-                chuyển</button>
-            <button mat-raised-button color="primary"
-                *ngIf="dialogData?.bill?.status === BILL_STATUS.transport.key">Hoàn thành</button>
-
-
         </mat-card-actions>
     </mat-card>
     <mat-card>
@@ -150,7 +164,8 @@
 
             <ng-container matColumnDef="price">
                 <th mat-header-cell *matHeaderCellDef> Đơn giá </th>
-                <td mat-cell *matCellDef="let element" class="md-card-sub-title" [ngClass]="{'text-decoration': element?.promotionPrice}">
+                <td mat-cell *matCellDef="let element" class="md-card-sub-title"
+                    [ngClass]="{'text-decoration': element?.promotionPrice}">
                     {{element?.price|number}} VNĐ </td>
             </ng-container>
 

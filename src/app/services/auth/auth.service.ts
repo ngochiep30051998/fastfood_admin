@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { errorStatus } from '../../constants/errors-status';
+import { IUser } from '../../interfaces/user.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -58,7 +59,20 @@ export class AuthService {
     this.angularFireAuth.auth.signOut();
     this.router.navigate(['/dang-nhap']);
   }
-  getCurrentUser() {
-    return this.angularFireAuth.user;
+  getCurrentUser(): Promise<IUser> {
+    return new Promise((resolve, reject) => {
+      return this.angularFireAuth.user.subscribe(res => {
+        resolve({
+          email: res.email,
+          displayName: res.displayName,
+          phoneNumber: res.phoneNumber,
+          photoURL: res.photoURL,
+          providerId: res.providerId,
+          uid: res.uid
+        });
+      }, err => {
+        reject(err);
+      });
+    });
   }
 }
