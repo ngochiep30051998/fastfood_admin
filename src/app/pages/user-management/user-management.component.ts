@@ -1,10 +1,10 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
-import { Subscription } from 'rxjs';
+import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ApiService } from '../../services/api/api.service';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { HelperService } from '../../services/helper/helper.service';
+import { CreateUserComponent } from './create-user/create-user.component';
 
 @Component({
   selector: 'app-user-management',
@@ -79,5 +79,18 @@ export class UserManagementComponent implements OnInit {
     } finally {
       this.helperService.hideLoading();
     }
+  }
+
+  openModal() {
+    this.dialog.open(CreateUserComponent, {
+      width: '350px',
+      height: '380px',
+      autoFocus: false
+    }).afterClosed().subscribe(res => {
+      if (res) {
+        this.allData.push(res);
+        this.dataSource.data = Object.assign([], this.allData);
+      }
+    });
   }
 }

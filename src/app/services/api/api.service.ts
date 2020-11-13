@@ -19,7 +19,7 @@ export class ApiService {
   async getAllUser() {
     try {
       const url = `${this.api}users`;
-      const idToken = await this.authService.getIdToken();
+      const idToken = await this.authService.getIdToken(true);
       let headers = new HttpHeaders();
       headers = headers.set('Authorization', 'Bearer ' + idToken);
       headers = headers.set('Content-Type', 'application/json');
@@ -31,7 +31,7 @@ export class ApiService {
   async upgradeUser(uid) {
     try {
       const url = `${this.api}users/admin`;
-      const idToken = await this.authService.getIdToken();
+      const idToken = await this.authService.getIdToken(true);
       let headers = new HttpHeaders();
       headers = headers.set('Authorization', 'Bearer ' + idToken);
       headers = headers.set('Content-Type', 'application/json');
@@ -44,11 +44,24 @@ export class ApiService {
   async downgradeUser(uid) {
     try {
       const url = `${this.api}users/block`;
-      const idToken = await this.authService.getIdToken();
+      const idToken = await this.authService.getIdToken(true);
       let headers = new HttpHeaders();
       headers = headers.set('Authorization', 'Bearer ' + idToken);
       headers = headers.set('Content-Type', 'application/json');
       return this.httpClient.put(url, { uid }, { headers }).toPromise();
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  }
+
+  async createUser(params) {
+    try {
+      const url = `${this.api}users`;
+      const idToken = await this.authService.getIdToken(true);
+      let headers = new HttpHeaders();
+      headers = headers.set('Authorization', 'Bearer ' + idToken);
+      headers = headers.set('Content-Type', 'application/json');
+      return this.httpClient.post(url, params, { headers }).toPromise();
     } catch (e) {
       return Promise.reject(e);
     }

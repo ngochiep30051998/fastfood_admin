@@ -1,0 +1,47 @@
+<div class="flex-between">
+    <span class="txt-bold">Thêm người dùng</span>
+    <mat-icon mat-dialog-close class="pointer">close</mat-icon>
+</div>
+
+<mat-dialog-content>
+    <form class="example-form" [formGroup]="form">
+        <mat-grid-list cols="1" rowHeight="60px">
+            <mat-grid-tile>
+                <mat-form-field appearance="fill" class="demo-full-width">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email">
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field appearance="fill" class="demo-full-width">
+                    <mat-label>Họ tên</mat-label>
+                    <input matInput formControlName="displayName">
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="fill" class="demo-full-width">
+                    <mat-label>Số điện thoại</mat-label>
+                    <input matInput type="tel" appInputNumber formControlName="phoneNumber">
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="fill" class="demo-full-width">
+                    <mat-label>Mật khẩu</mat-label>
+                    <input matInput type="password" formControlName="password">
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile class="flex-beetween">
+                <div class="flex-between" style="width: 100%;">
+                    <mat-checkbox appearance="fill" class="demo-full-width" formControlName="isAdmin">Quản trị viên</mat-checkbox>
+                    <button mat-raised-button color="primary" [disabled]='loading' (click)="create()">
+                        Tạo
+                    </button>
+                </div>
+            </mat-grid-tile>
+            
+        </mat-grid-list>
+
+    </form>
+</mat-dialog-content>
+

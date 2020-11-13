@@ -86,7 +86,7 @@ export class AuthService {
     });
   }
 
-  getIdToken() {
-    return this.angularFireAuth.auth.currentUser.getIdToken();
+  getIdToken(forceRefresh?: boolean) {
+    return this.angularFireAuth.auth.currentUser.getIdToken(forceRefresh);
   }
 }

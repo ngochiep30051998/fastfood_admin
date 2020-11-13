@@ -1,15 +1,16 @@
-<div class="flex-end">
+<div class="flex-between">
+    <span class="txt-bold">{{dialogData.product ? 'Cập nhật sản phẩm' :'Thêm sản phẩm'}}</span>
     <mat-icon mat-dialog-close class="pointer">close</mat-icon>
 </div>
 
 <mat-dialog-content>
-    <mat-grid-list cols="1" rowHeight="40px">
+    <!-- <mat-grid-list cols="1" rowHeight="40px">
         <mat-grid-tile>
             <mat-card-title>
                 {{dialogData.product ? 'Cập nhật sản phẩm' :'Thêm sản phẩm'}}
             </mat-card-title>
         </mat-grid-tile>
-    </mat-grid-list>
+    </mat-grid-list> -->
     <form class="example-form" [formGroup]="form">
         <mat-grid-list cols="1" rowHeight="80px">
             <mat-grid-tile>

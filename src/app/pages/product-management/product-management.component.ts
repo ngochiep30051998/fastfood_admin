@@ -69,8 +69,8 @@ export class ProductManagementComponent implements OnInit, OnDestroy {
       };
       this.dialog.open(ModalDeleteProductComponent, {
         data,
-        width: '350px',
-        height: '200px',
+        width: '450px',
+        height: '170px',
         autoFocus: false
       });
     } catch (e) {
