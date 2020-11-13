@@ -37,19 +37,10 @@ export class BillDetailComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dialogData: IPopupData,
   ) {
     this.billDetail = this.dialogData.bill;
-    console.log(this.billDetail);
     this.dataSource.data = this.billDetail.products.map(product => {
       product.totalPrice = product.promotionPrice ? product.promotionPrice * product.amount : product.price * product.amount;
       return product;
     });
-    // this.firebaseService.getBillDetail(this.dialogData.bill.id).subscribe((bill: IBill) => {
-    //   this.billDetail = bill;
-    //   console.log(this.billDetail);
-    //   this.dataSource.data = this.billDetail.products.map(product => {
-    //     product.totalPrice = product.promotionPrice ? product.promotionPrice * product.amount : product.price * product.amount;
-    //     return product;
-    //   });
-    // });
   }
 
   ngOnInit() {
@@ -60,13 +51,34 @@ export class BillDetailComponent implements OnInit {
 
   async updateStatus(status: string) {
     try {
+      if (this.billDetail.status === BILL_STATUS.canceled.key) {
+        return;
+      }
+
+      if (status === BILL_STATUS.accept.key) {
+        console.log(this.billDetail)
+        const list = [];
+        for (const product of this.billDetail.products) {
+          const p = this.firebaseService.checkUpdate(product);
+          list.push(p);
+        }
+        const updateP = await Promise.all(list);
+        const menu =  await this.firebaseService.getRefData(`menus/${this.billDetail.products[0].menuId}`);
+        console.log(menu)
+        console.log(updateP);
+        return;
+      }
       this.helperService.showLoading();
       this.billDetail.status = status;
-      const update = await this.firebaseService.updateBill({...this.billDetail});
+      const update = await this.firebaseService.updateBill({ ...this.billDetail });
       this.toastr.success('Cập nhật thành công');
     } catch (e) {
       console.log(e);
-      this.toastr.error('Cập nhật thất bại');
+      if (e && e.code === '1') {
+        this.toastr.error(e.message);
+      } else {
+        this.toastr.error('Cập nhật thất bại');
+      }
     } finally {
       this.helperService.hideLoading();
     }
@@ -76,7 +88,7 @@ export class BillDetailComponent implements OnInit {
     try {
       this.helperService.showLoading();
       this.billDetail.paymentStatus = status;
-      const update = await this.firebaseService.updateBill({...this.billDetail});
+      const update = await this.firebaseService.updateBill({ ...this.billDetail });
       this.toastr.success('Cập nhật thành công');
     } catch (e) {
       console.log(e);

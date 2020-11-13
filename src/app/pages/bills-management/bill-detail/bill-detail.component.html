@@ -115,7 +115,7 @@
                 (click)="payment(PAYMENT_STATUS.canceled)">Hoàn tiền</button>
 
             <button mat-raised-button color="primary"
-                *ngIf="billDetail?.status === BILL_STATUS.pending.key || billDetail?.status === BILL_STATUS.canceled.key"
+                *ngIf="billDetail?.status === BILL_STATUS.pending.key"
                 (click)="updateStatus(BILL_STATUS.accept.key)">Xác
                 nhận</button>
             <button mat-raised-button color="primary" *ngIf="billDetail?.status === BILL_STATUS.accept.key"

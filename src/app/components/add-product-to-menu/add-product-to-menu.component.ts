@@ -31,7 +31,7 @@ export class AddProductToMenuComponent implements OnInit {
       category: ['', Validators.required],
       search: [''],
       productId: [{ value: '', disabled: true }],
-      productName: ['',Validators.required],
+      productName: ['', Validators.required],
       detail: [''],
       price: ['', Validators.required],
       promotionPrice: [''],
@@ -131,10 +131,9 @@ export class AddProductToMenuComponent implements OnInit {
       this.toastr.success('Thêm thành công');
       this.dialogRef.close();
     } catch (e) {
-      console.log(e);
-      if (e && e.message) {
-        this.toastr.error(e.message);
-
+      console.log(e.code);
+      if (e && e.code === 'PERMISSION_DENIED') {
+        this.toastr.error('Số lượng sản phẩm phải lớn hơn 0');
       }
     } finally {
       this.loading = false;

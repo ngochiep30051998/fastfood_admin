@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireStorage } from '@angular/fire/storage';
+import * as firebase from 'firebase';
 import { map } from 'rxjs/operators';
+import { IBill } from '../../interfaces/bill.interface';
 import { IMenu } from '../../interfaces/menu.interfaces';
 import { IProduct } from '../../interfaces/products.interface';
-import { HelperService } from '../helper/helper.service';
-import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
-import { IBill } from '../../interfaces/bill.interface';
-import * as firebase from 'firebase';
-import { AuthService } from '../auth/auth.service';
 import { IUser } from '../../interfaces/user.interface';
+import { AuthService } from '../auth/auth.service';
+import { HelperService } from '../helper/helper.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -222,5 +222,51 @@ export class FirebaseService {
   }
   copyMenu(date, menu) {
     return this.db.object(`/menus/${date}`).set(menu);
+  }
+
+  async checkUpdate(product: IProduct) {
+    try {
+      return new Promise((resolve, reject) => {
+        const snap = this.db.object(`menus/${product.menuId}/${product.meal}/${product.id}`);
+        snap.valueChanges().subscribe((p: IProduct) => {
+          if (p.amount >= product.amount) {
+            resolve({
+              billAmount: product.amount,
+              currentAmount: p.amount,
+              productPath: `menus/${product.menuId}/${product.meal}/${product.id}`
+            });
+          } else {
+            reject({
+              message: `Sản phẩm ${product.name} chỉ còn ${p.amount} < ${product.amount}`,
+              code: '1'
+            });
+          }
+        }, err => {
+          console.log('false-------');
+          reject(err);
+        });
+      });
+
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async updateBillProduct(amount, path) {
+    try {
+      return this.db.object(path).update(amount);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  getRefData(path) {
+    return new Promise((resolve, reject) => {
+      this.db.object(path).valueChanges().subscribe(res => {
+        resolve(res);
+      }, err => {
+        reject(err);
+      });
+    });
   }
 }

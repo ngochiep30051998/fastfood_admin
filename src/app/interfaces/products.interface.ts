@@ -16,6 +16,7 @@ export interface IProduct {
     unit?: string;
     meal?: string;
     totalPrice?: number;
+    menuId?: string;
 }
 
 export interface ICategories {
