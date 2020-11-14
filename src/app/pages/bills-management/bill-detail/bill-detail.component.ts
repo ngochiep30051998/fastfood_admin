@@ -57,16 +57,38 @@ export class BillDetailComponent implements OnInit {
 
       if (status === BILL_STATUS.accept.key) {
         console.log(this.billDetail)
-        const list = [];
+        const menu = await this.firebaseService.getRefData(`menus/${this.billDetail.products[0].menuId}`);
         for (const product of this.billDetail.products) {
-          const p = this.firebaseService.checkUpdate(product);
-          list.push(p);
+          console.log(menu[product.meal][product.id]);
+          const curProuct = menu[product.meal][product.id];
+          if (curProuct) {
+            if (curProuct.amount > product.amount) {
+              menu[product.meal][product.id].amount = curProuct.amount - product.amount;
+            } else {
+              this.toastr.error(`Không đủ số lượng: ${product.name} trong thực đơn`);
+              return;
+            }
+          } else {
+            this.toastr.error(`Không có: ${product.name} trong thực đơn`);
+            return;
+          }
         }
-        const updateP = await Promise.all(list);
-        const menu =  await this.firebaseService.getRefData(`menus/${this.billDetail.products[0].menuId}`);
+        // this.toastr.success('Cập nhật thành công');
         console.log(menu)
-        console.log(updateP);
-        return;
+        await this.firebaseService.updateRef(`menus/${this.billDetail.products[0].menuId}`, menu);
+      } else if (status === BILL_STATUS.canceled.key) {
+        console.log(this.billDetail)
+        const menu = await this.firebaseService.getRefData(`menus/${this.billDetail.products[0].menuId}`);
+        for (const product of this.billDetail.products) {
+          console.log(menu[product.meal][product.id]);
+          const curProuct = menu[product.meal][product.id];
+          if (curProuct) {
+            menu[product.meal][product.id].amount = curProuct.amount + product.amount;
+          }
+        }
+        // this.toastr.success('Cập nhật thành công');
+        console.log(menu)
+        await this.firebaseService.updateRef(`menus/${this.billDetail.products[0].menuId}`, menu);
       }
       this.helperService.showLoading();
       this.billDetail.status = status;
@@ -74,8 +96,8 @@ export class BillDetailComponent implements OnInit {
       this.toastr.success('Cập nhật thành công');
     } catch (e) {
       console.log(e);
-      if (e && e.code === '1') {
-        this.toastr.error(e.message);
+      if (e && e.code === 'PERMISSION_DENIED') {
+        this.toastr.error('Số lượng sản phẩm trong thực đơn không đủ');
       } else {
         this.toastr.error('Cập nhật thất bại');
       }

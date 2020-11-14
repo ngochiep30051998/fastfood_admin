@@ -49,7 +49,7 @@ export class BillsManagementComponent implements OnInit, OnDestroy {
       }))
     ).subscribe(res => {
       console.log(res);
-      this.allData = res;
+      this.allData = res.reverse();
       this.listBill = Object.assign([], this.allData);
       this.dataSource.data = Object.assign([], this.allData);
     });

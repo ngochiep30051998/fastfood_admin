@@ -269,4 +269,8 @@ export class FirebaseService {
       });
     });
   }
+
+  updateRef(ref, data) {
+    return this.db.object(ref).update(data);
+  }
 }

@@ -6,6 +6,8 @@ import {
   OnDestroy,
   OnInit
 } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../../../services/auth/auth.service';
 
 export interface Menu {
@@ -40,14 +42,20 @@ export class AppSidebarComponent implements OnDestroy, OnInit {
   menuItems: Menu[];
   private _mobileQueryListener: () => void;
   public currentUser: any;
+  private userSub$: Subscription;
   constructor(
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    private authService: AuthService
+    private authService: AuthService,
+    private angularFireAuth: AngularFireAuth
   ) {
     this.mobileQuery = media.matchMedia('(min-width: 768px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
+    this.userSub$ = this.angularFireAuth.user.subscribe(res => {
+      this.currentUser = res;
+      console.log(this.currentUser)
+    })
   }
   async ngOnInit() {
     const tokenResult: any = await this.authService.getResultToken();
@@ -62,5 +70,8 @@ export class AppSidebarComponent implements OnDestroy, OnInit {
   }
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+    if (this.userSub$) {
+      this.userSub$.unsubscribe();
+    }
   }
 }

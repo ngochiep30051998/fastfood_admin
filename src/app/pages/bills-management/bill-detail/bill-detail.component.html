@@ -109,7 +109,7 @@
         </table>
         <mat-card-actions>
             <div class="clear"></div>
-            <button mat-raised-button color="success" *ngIf="billDetail?.paymentStatus !== PAYMENT_STATUS.success"
+            <button mat-raised-button color="success" *ngIf="billDetail?.paymentStatus !== PAYMENT_STATUS.success && billDetail?.status!== BILL_STATUS.canceled.key"
                 (click)="payment(PAYMENT_STATUS.success)">Thanh toán</button>
             <button mat-raised-button color="warn" *ngIf="billDetail?.paymentStatus === PAYMENT_STATUS.success"
                 (click)="payment(PAYMENT_STATUS.canceled)">Hoàn tiền</button>
