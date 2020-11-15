@@ -357,14 +357,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     };
   }
 
-  // @HostListener('window:resize', ['$event'])
-  // onResize(event) {
-  //   console.log(window.innerWidth)
-  // }
-
-  onChangeDate(event) {
-    console.log(this.dateRange, event)
-  }
   ngOnDestroy(): void {
     if (this.billSub$) {
       this.billSub$.unsubscribe();
