@@ -10,11 +10,12 @@ import { BillDetailComponent } from './bill-detail/bill-detail.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { NGX_MAT_FILE_INPUT_CONFIG } from 'ngx-material-file-input';
 import { config } from 'process';
+import { BillPdfComponent } from './bill-pdf/bill-pdf.component';
 
 
 
 @NgModule({
-  declarations: [BillsManagementComponent, BillDetailComponent],
+  declarations: [BillsManagementComponent, BillDetailComponent, BillPdfComponent],
   imports: [
     CommonModule,
     DemoMaterialModule,
@@ -28,7 +29,8 @@ import { config } from 'process';
     }])
   ],
   entryComponents: [
-    BillDetailComponent
+    BillDetailComponent,
+    BillPdfComponent
   ],
   providers: [
     { provide: MAT_DIALOG_DATA, useValue: {} },

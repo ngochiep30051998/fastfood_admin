@@ -1,12 +1,13 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { MatDialogRef, MatPaginator, MatSort, MatTableDataSource, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MatPaginator, MatSort, MatTableDataSource, MAT_DIALOG_DATA } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { BILL_STATUS, PAYMENT_STATUS, TRANS_TYPE } from '../../../constants/constants';
 import { IBill } from '../../../interfaces/bill.interface';
 import { IPopupData, IProduct } from '../../../interfaces/products.interface';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { HelperService } from '../../../services/helper/helper.service';
+import { BillPdfComponent } from '../bill-pdf/bill-pdf.component';
 
 @Component({
   selector: 'app-bill-detail',
@@ -34,6 +35,8 @@ export class BillDetailComponent implements OnInit {
     private firebaseService: FirebaseService,
     private helperService: HelperService,
     private toastr: ToastrService,
+    public dialog: MatDialog,
+
     @Inject(MAT_DIALOG_DATA) public dialogData: IPopupData,
   ) {
     this.billDetail = this.dialogData.bill;
@@ -122,4 +125,16 @@ export class BillDetailComponent implements OnInit {
     }
   }
 
+  openPDF() {
+    const data: IPopupData = {
+      bill: this.billDetail
+    };
+    this.dialog.open(BillPdfComponent, {
+      data,
+      autoFocus: false,
+      height: '100%',
+      maxWidth: '860px',
+      panelClass: 'full-screen-modal',
+    });
+  }
 }

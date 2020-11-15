@@ -1,0 +1,100 @@
+
+<div class="flex-between">
+    <button mat-raised-button (click)="openPDF()" >
+        Tải hoá đơn
+    </button>
+    <mat-icon mat-dialog-close class="pointer">close</mat-icon>
+</div>
+<div class="invoice-box" #htmlData>
+    <table cellpadding="0" cellspacing="0">
+        <tr class="information">
+            <td colspan="4">
+                <table>
+                    <tr>
+                        <td>
+                            Khách hàng: {{billDetail?.user?.displayName}}<br>
+                            Email: {{billDetail?.user?.email}}<br>
+                            Địa chỉ nhận hàng: {{billDetail?.address}}<br>
+                            <ng-container *ngIf="billDetail?.user?.phoneNumber">
+                                SĐT: {{billDetail?.user?.phoneNumber}}<br>
+                            </ng-container>
+                            Ngày mua hàng: {{billDetail?.date |date:'dd/MM/yyyy HH:mm'}}<br>
+
+                        </td>
+                   
+                        <td>
+                            Cửa hàng: Fast Food<br>
+                            Nhân viên: {{billDetail?.staff?.displayName}}<br>
+
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <tr class="heading">
+            <td>
+                Hình thức thanh toán
+            </td>
+            <td></td>
+            <td></td>
+            <td>
+                {{billDetail?.payment === TRANS_TYPE?.online ? 'Thẻ tín dụng' : 'Tiền mặt'}}
+            </td>
+        </tr>
+     
+        <tr class="heading">
+            <td>
+                Sản phẩm
+            </td>
+            
+            <td>
+                Số lượng
+            </td>
+            <td>
+                Đơn giá
+            </td>
+            <td>Thành tiền</td>
+        </tr>
+        
+        <tr class="item" *ngFor="let product of billDetail?.products; let last = last;" [ngClass]="{'last':last}">
+            <td>
+                {{product?.name}}
+            </td>
+            
+            <td>
+                {{product?.amount |number}}
+            </td>
+            <td>
+                {{(product?.promotionPrice ? product?.promotionPrice : product?.price) |number }}
+            </td>
+            <td>{{product?.totalPrice |number}}</td>
+        </tr>
+    
+        
+        <tr class="total">
+            <td></td>
+            
+            <td>
+               Tổng thanh toán: {{billDetail?.totalPrice |number}} vnđ
+            </td>
+        </tr>
+        <tr class="information">
+            <td colspan="4">
+                <table>
+                    <tr>
+                        <td>
+                            Khách hàng<br><br>
+                            ..............................
+                        </td>
+                   
+                        <td>
+                            Nhân viên<br><br>
+                            ..............................
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
