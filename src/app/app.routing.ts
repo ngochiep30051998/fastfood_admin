@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { FullComponent } from './layouts/full/full.component';
 import { AuthGuard } from './services/auth/auth.guard';
+import { LoginGuard } from './services/auth/login.guard';
 
 export const AppRoutes: Routes = [
   {
@@ -11,7 +12,7 @@ export const AppRoutes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/dang-nhap',
+        redirectTo: 'trang-chu',
         pathMatch: 'full'
       },
       {
@@ -39,6 +40,7 @@ export const AppRoutes: Routes = [
   },
   {
     path: 'dang-nhap',
+    canActivate:[LoginGuard],
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
   },
 ];

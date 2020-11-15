@@ -44,6 +44,11 @@
     justify-content: space-between;
   }
 
+  .flex-around{
+    display: flex;
+    justify-content: space-around;
+  }
+
   .flex-end{
     display: flex;
     justify-content: flex-end;
@@ -246,3 +251,6 @@
     font-size: 15px;
     padding-right: 10px;
   }
+
+  @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+  @import '~saturn-datepicker/bundle.css';

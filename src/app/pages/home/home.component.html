@@ -1,42 +1,166 @@
-<!-- ============================================================== -->
-<!-- Simple four boxes Row -->
-<!-- ============================================================== -->
+<div class="flex-container">
+    <div class="condition">
+        <!-- <mat-form-field appearance="fill">
+            <mat-label>Chọn ngày bắt đầu</mat-label>
+            <input matInput [matDatepicker]="dp" [(ngModel)]="startDate">
+            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+            <mat-datepicker #dp></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Chọn ngày kết thúc</mat-label>
+            <input matInput [matDatepicker]="dp2" [(ngModel)]="endDate">
+            <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+            <mat-datepicker #dp2></mat-datepicker>
+        </mat-form-field> -->
+        <mat-form-field appearance="fill">
+
+            <input matInput [(ngModel)]="dateRange"
+                   placeholder="Chọn ngày" (onDateInput)="onChangeDate($event)"
+                   [satDatepicker]="orderdate" [max]="maxDate" [maxlength]="2">
+            <sat-datepicker #orderdate [rangeMode]="true" [selectFirstDateOnClose]="true" [endDate]="1" [rangeHoverEffect]="true"   >
+            </sat-datepicker>
+            <sat-datepicker-toggle matSuffix [for]="orderdate" ></sat-datepicker-toggle>
+        </mat-form-field>
+        <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="getData()">Thống kê</button>
+
+    </div>
+
+</div>
+<!-- column -->
+<mat-card class="content-table">
+    <!-- <mat-grid-list cols="1" rowHeight="80px">
+        <mat-grid-tile>
+            <h4>Thông tin thống kê</h4>
+        </mat-grid-tile>
+    </mat-grid-list> -->
+    <div class="flex-around">
+        <h4>Thông tin thống kê</h4>
+    </div>
+    <mat-card-content>
+        <table>
+            <tr>
+                <td rowspan="2">Loại hoá đơn</td>
+                <td colspan="2">Hình thức thanh toán</td>
+                <td colspan="3">Trạng thái thanh toán</td>
+                <td colspan="2">Tổng tiền</td>
+
+            </tr>
+            <tr>
+                <td>Online</td>
+                <td>Tiền mặt</td>
+                <td>Đã thanh toán</td>
+                <td>Chưa thanh toán</td>
+                <td>Đã hoàn tiền</td>
+                <td>Đã thu</td>
+                <td>Chưa thu</td>
+            </tr>
+            <tr>
+                <td>Đã hoàn thành</td>
+                <td>{{(doneBill?.totalOnlinePayment || 0) |number}}</td>
+                <td>{{(doneBill?.offlinePayment || 0) |number}}</td>
+                <td>{{(doneBill?.paymentSuccess || 0) |number}}</td>
+                <td>{{(doneBill?.paymentPending || 0) |number}}</td>
+                <td>{{(doneBill?.paymentCanceled || 0) |number}}</td>
+                <td>{{(doneBill?.totalPrice || 0) |number}} vnđ</td>
+                <td>{{(doneBill?.totalPendingPrice || 0) |number}} vnđ</td>
+            </tr>
+
+            <tr>
+                <td>Đang giao hàng</td>
+                <td>{{(transportBill?.totalOnlinePayment || 0) |number}}</td>
+                <td>{{(transportBill?.offlinePayment || 0) |number}}</td>
+                <td>{{(transportBill?.paymentSuccess || 0) |number}}</td>
+                <td>{{(transportBill?.paymentPending || 0) |number}}</td>
+                <td>{{(transportBill?.paymentCanceled || 0) |number}}</td>
+                <td>{{(transportBill?.totalPrice || 0) |number}} vnđ</td>
+                <td>{{(transportBill?.totalPendingPrice || 0) |number}} vnđ</td>
+            </tr>
+            <tr>
+                <td>Đã xác nhận</td>
+                <td>{{(acceptBill?.totalOnlinePayment || 0) |number}}</td>
+                <td>{{(acceptBill?.offlinePayment || 0) |number}}</td>
+                <td>{{(acceptBill?.paymentSuccess || 0) |number}}</td>
+                <td>{{(acceptBill?.paymentPending || 0) |number}}</td>
+                <td>{{(acceptBill?.paymentCanceled || 0) |number}}</td>
+                <td>{{(acceptBill?.totalPrice || 0) |number}} vnđ</td>
+                <td>{{(acceptBill?.totalPendingPrice || 0) |number}} vnđ</td>
+            </tr>
+            <tr>
+                <td>Chưa xác nhận</td>
+                <td>{{(pendinglBill?.totalOnlinePayment || 0) |number}}</td>
+                <td>{{(pendinglBill?.offlinePayment || 0) |number}}</td>
+                <td>{{(pendinglBill?.paymentSuccess || 0) |number}}</td>
+                <td>{{(pendinglBill?.paymentPending || 0) |number}}</td>
+                <td>{{(pendinglBill?.paymentCanceled || 0) |number}}</td>
+                <td>{{(pendinglBill?.totalPrice || 0) |number}} vnđ</td>
+                <td>{{(pendinglBill?.totalPendingPrice || 0) |number}} vnđ</td>
+            </tr>
+            <tr>
+                <td>Đã huỷ</td>
+                <td>{{(cancelBill?.totalOnlinePayment || 0) |number}}</td>
+                <td>{{(cancelBill?.offlinePayment || 0) |number}}</td>
+                <td>{{(cancelBill?.paymentSuccess || 0) |number}}</td>
+                <td>{{(cancelBill?.paymentPending || 0) |number}}</td>
+                <td>{{(cancelBill?.paymentCanceled || 0) |number}}</td>
+                <td>{{(cancelBill?.totalPrice || 0) |number}} vnđ</td>
+                <td>{{(cancelBill?.totalPendingPrice || 0) |number}} vnđ</td>
+            </tr>
+            <tr>
+                <td>Tổng</td>
+                <td>{{(data?.totalOnlinePayment || 0) |number}}</td>
+                <td>{{(data?.offlinePayment || 0) |number}}</td>
+                <td>{{(data?.paymentSuccess || 0) |number}}</td>
+                <td>{{(data?.paymentPending || 0) |number}}</td>
+                <td>{{(data?.paymentCanceled || 0) |number}}</td>
+                <td>{{(data?.totalPrice || 0) |number}} vnđ</td>
+                <td>{{(data?.totalPendingPrice || 0) |number}} vnđ</td>
+            </tr>
+        </table>
+    </mat-card-content>
+</mat-card>
+<!-- column -->
 <div fxLayout="row wrap">
-    <!-- column -->    
-    <div fxFlex.gt-lg="66" fxFlex.gt-md="66" fxFlex.gt-xs="100" fxFlex="100">
+    <!-- column -->
+    <div fxFlex.gt-lg="100" fxFlex.gt-md="100" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card>
-            <mat-card-content>
+            <mat-card-content class="chart-content">
                 <div class="d-flex flex-wrap">
                     <div>
-                        <mat-card-title>Sales Overview</mat-card-title>
-                         <mat-card-subtitle>Ample Admin Vs Material Admin</mat-card-subtitle> 
-                     </div>
+                        <mat-card-title>Biểu đồ doanh thu tiền mặt / thẻ tín dụng (đơn vị: nghìn vnđ)</mat-card-title>
+                        <!-- <mat-card-subtitle>Ample Admin Vs Material Admin</mat-card-subtitle> -->
+                    </div>
                     <div class="ml-auto">
                         <ul class="list-inline">
                             <li>
-                                <h6 class="text-success m-0"><i class="mdi mdi-checkbox-blank-circle font-10 m-r-10 "></i>Ample</h6> </li>
+                                <h6 class="text-success m-0"><i
+                                        class="mdi mdi-checkbox-blank-circle font-10 m-r-10 "></i>Thẻ tín dụng</h6>
+                            </li>
                             <li>
-                                <h6 class=" text-info m-0"><i class="mdi mdi-checkbox-blank-circle font-10 m-r-10"></i>Pixel</h6> </li>
+                                <h6 class=" text-info m-0"><i
+                                        class="mdi mdi-checkbox-blank-circle font-10 m-r-10"></i>Tiền mặt </h6>
+                            </li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="barchrt" style="height:360px;">
-                    <x-chartist class="" [data]="barChart1.data" [type]="barChart1.type" [options]="barChart1.options" [responsiveOptions]="barChart1.responsiveOptions"
-                        [events]="barChart1.events"> </x-chartist>
+                <div class="barchrt" style="height:auto;" *ngIf="barChart1">
+                    <x-chartist class="" [data]="barChart1.data" [type]="barChart1.type" [options]="barChart1.options"
+                        [responsiveOptions]="barChart1.responsiveOptions" [events]="barChart1.events"> </x-chartist>
                 </div>
             </mat-card-content>
         </mat-card>
     </div>
-    <!-- column -->    
-    <!-- column -->    
-    <div fxFlex.gt-lg="33" fxFlex.gt-md="33"  fxFlex.gt-xs="100" fxFlex="100">
+    <!-- column -->
+    <!-- column -->
+    <!-- <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card>
             <mat-card-content>
                 <mat-card-title>Our Visitors</mat-card-title>
                 <mat-card-subtitle>Different Devices Used to Visit</mat-card-subtitle>
                 <div class="piechart">
-                    <x-chartist class="" [data]="donuteChart1.data" [type]="donuteChart1.type" [options]="donuteChart1.options" [responsiveOptions]="donuteChart1.responsiveOptions"
+                    <x-chartist class="" [data]="donuteChart1.data" [type]="donuteChart1.type"
+                        [options]="donuteChart1.options" [responsiveOptions]="donuteChart1.responsiveOptions"
                         [events]="donuteChart1.events"> </x-chartist>
                 </div>
             </mat-card-content>
@@ -58,6 +182,6 @@
                 </ul>
             </mat-card-content>
         </mat-card>
-    </div>
-    <!-- column -->    
+    </div> -->
+    <!-- column -->
 </div>

@@ -4,6 +4,8 @@ import { FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
+import * as moment from 'moment';
+import { formatDate } from '@angular/common';
 @Injectable({
   providedIn: 'root'
 })
@@ -100,15 +102,36 @@ export class HelperService {
     const byteArrays = new Array(slicesCount);
 
     for (let sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
-        const begin = sliceIndex * sliceSize;
-        const end = Math.min(begin + sliceSize, bytesLength);
+      const begin = sliceIndex * sliceSize;
+      const end = Math.min(begin + sliceSize, bytesLength);
 
-        const bytes = new Array(end - begin);
-        for (let offset = begin, i = 0 ; offset < end; ++i, ++offset) {
-            bytes[i] = byteCharacters[offset].charCodeAt(0);
-        }
-        byteArrays[sliceIndex] = new Uint8Array(bytes);
+      const bytes = new Array(end - begin);
+      for (let offset = begin, i = 0; offset < end; ++i, ++offset) {
+        bytes[i] = byteCharacters[offset].charCodeAt(0);
+      }
+      byteArrays[sliceIndex] = new Uint8Array(bytes);
     }
     return new Blob(byteArrays, { type: contentType });
-}
+  }
+
+  getWeekInMonth() {
+    const firstFeb2014 = moment(new Date());
+    const day = firstFeb2014.day();
+    const nthOfMoth = Math.ceil(firstFeb2014.date() / 7);
+    console.log(day, nthOfMoth);
+  }
+  getDates(startDate, stopDate) {
+    const dateArray = [];
+    let currentDate = moment(startDate);
+    stopDate = moment(stopDate);
+    while (currentDate <= stopDate) {
+      dateArray.push(moment(currentDate).format('DD/MM/YYYY'));
+      currentDate = moment(currentDate).add(1, 'days');
+    }
+    return dateArray;
+  }
+
+  isSameDate(date1, date2) {
+      return moment(date1).isSame(date2);
+  }
 }

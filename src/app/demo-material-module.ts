@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -39,17 +39,17 @@ import {
   MatTooltipModule,
   MatStepperModule,
 } from '@angular/material';
-import {MatNativeDateModule, MatRippleModule} from '@angular/material';
-import {CdkTableModule} from '@angular/cdk/table';
-import {CdkAccordionModule} from '@angular/cdk/accordion';
-import {A11yModule} from '@angular/cdk/a11y';
-import {BidiModule} from '@angular/cdk/bidi';
-import {OverlayModule} from '@angular/cdk/overlay';
-import {PlatformModule} from '@angular/cdk/platform';
-import {ObserversModule} from '@angular/cdk/observers';
-import {PortalModule} from '@angular/cdk/portal';
+import { MatNativeDateModule, MatRippleModule, } from '@angular/material';
+import { CdkTableModule } from '@angular/cdk/table';
+import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { A11yModule } from '@angular/cdk/a11y';
+import { BidiModule } from '@angular/cdk/bidi';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { PlatformModule } from '@angular/cdk/platform';
+import { ObserversModule } from '@angular/cdk/observers';
+import { PortalModule } from '@angular/cdk/portal';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
-
+import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 /**
  * NgModule that includes all Material modules that are required to serve the demo-app.
  */
@@ -95,7 +95,9 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     OverlayModule,
     PlatformModule,
     PortalModule,
-    MaterialFileInputModule
+    MaterialFileInputModule,
+    SatDatepickerModule,
+    SatNativeDateModule
   ]
 })
-export class DemoMaterialModule {}
+export class DemoMaterialModule { }

@@ -1,0 +1,55 @@
+.flex-container{
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .flex-container .filter{
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    button{
+        max-height: 40px;
+    }
+  }
+  .flex-container .condition{
+    width: 80%;
+  }
+  .flex-container .condition mat-form-field {
+    width: 45%;
+    padding-left: 1em;
+  }
+  .flex-container .action{
+    width: 10%;
+  }
+  .flex-container .action button{
+    margin-top: 10px;
+    float: right;
+  }
+
+
+  tr:nth-child(even) {
+    // background-color: #dddddd;
+  }
+
+  .content-table {
+    min-width: 327px;
+    overflow: auto;
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        // min-width: 100%;
+        overflow: auto;
+      }
+      
+      td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+      
+  }
+  .chart-content{
+    overflow: auto;
+  }

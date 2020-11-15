@@ -3,6 +3,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireStorage } from '@angular/fire/storage';
 import * as firebase from 'firebase';
 import { map } from 'rxjs/operators';
+import { BILL_STATUS } from '../../constants/constants';
 import { IBill } from '../../interfaces/bill.interface';
 import { IMenu } from '../../interfaces/menu.interfaces';
 import { IProduct } from '../../interfaces/products.interface';
@@ -273,4 +274,11 @@ export class FirebaseService {
   updateRef(ref, data) {
     return this.db.object(ref).update(data);
   }
+
+  getListBill(start, end) {
+    return this.db.list('/bills',
+      ref => ref.orderByChild('date').startAt(start).endAt(end)
+    ).valueChanges();
+  }
+
 }

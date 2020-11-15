@@ -59,10 +59,13 @@ export class BillDetailComponent implements OnInit {
         console.log(this.billDetail)
         const menu = await this.firebaseService.getRefData(`menus/${this.billDetail.products[0].menuId}`);
         for (const product of this.billDetail.products) {
-          console.log(menu[product.meal][product.id]);
+          if (!menu[product.meal]) {
+            this.toastr.error(`Không có: ${product.name} trong thực đơn`);
+            return;
+          }
           const curProuct = menu[product.meal][product.id];
           if (curProuct) {
-            if (curProuct.amount > product.amount) {
+            if (curProuct.amount >= product.amount) {
               menu[product.meal][product.id].amount = curProuct.amount - product.amount;
             } else {
               this.toastr.error(`Không đủ số lượng: ${product.name} trong thực đơn`);
@@ -74,9 +77,8 @@ export class BillDetailComponent implements OnInit {
           }
         }
         // this.toastr.success('Cập nhật thành công');
-        console.log(menu)
         await this.firebaseService.updateRef(`menus/${this.billDetail.products[0].menuId}`, menu);
-      } else if (status === BILL_STATUS.canceled.key) {
+      } else if (status === BILL_STATUS.canceled.key && this.billDetail.status === BILL_STATUS.accept.key) {
         console.log(this.billDetail)
         const menu = await this.firebaseService.getRefData(`menus/${this.billDetail.products[0].menuId}`);
         for (const product of this.billDetail.products) {
