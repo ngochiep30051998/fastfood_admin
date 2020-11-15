@@ -7314,7 +7314,7 @@ sass@1.22.2:
   dependencies:
     chokidar ">=2.0.0 <4.0.0"
 
-saturn-datepicker@^8.0.5:
+saturn-datepicker@^8.0.1:
   version "8.0.5"
   resolved "https://registry.yarnpkg.com/saturn-datepicker/-/saturn-datepicker-8.0.5.tgz#3606b06769327aa286528173a9df47b4995f9b52"
   integrity sha512-LEJftfa/mDNYFLdOZRETU4SEjXPtd5xve8hjyUHmxmc/znYD4PqBfS044+C1uekN4M92YZlsLUXWKmPKSdAQbg==
