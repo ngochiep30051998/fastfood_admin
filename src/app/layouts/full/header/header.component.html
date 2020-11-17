@@ -6,9 +6,9 @@
 <button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5"> <img [src]="currentUser?.photoURL ||'assets/images/defaults/default-avt.png'" alt="user"
         class="profile-pic"> </button>
 <mat-menu #profile="matMenu" class="mymegamenu">
-    <button mat-menu-item (click)="goto('thay-doi-mat-khau')">
+    <!-- <button mat-menu-item (click)="goto('thay-doi-mat-khau')">
         <mat-icon>account_box</mat-icon> Thay đổi mật khẩu
-    </button>
+    </button> -->
     <button mat-menu-item (click)="logout()">
         <mat-icon>exit_to_app</mat-icon> Đăng xuất
     </button>
