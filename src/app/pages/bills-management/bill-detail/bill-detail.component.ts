@@ -40,7 +40,7 @@ export class BillDetailComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dialogData: IPopupData,
   ) {
     this.billDetail = this.dialogData.bill;
-    this.dataSource.data = this.billDetail.products.map(product => {
+    this.dataSource.data = this.billDetail.products && this.billDetail.products.map(product => {
       product.totalPrice = product.promotionPrice ? product.promotionPrice * product.amount : product.price * product.amount;
       return product;
     });
