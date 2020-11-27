@@ -5751,6 +5751,13 @@ ngx-image-compress@^8.0.4:
   dependencies:
     tslib "^1.9.0"
 
+ngx-mat-select-search@^3.1.4:
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/ngx-mat-select-search/-/ngx-mat-select-search-3.1.4.tgz#f948b7c934637eac16c44e390a82511e2dce3ade"
+  integrity sha512-yQPalWj8+K2SVZW7wlmknHlCdpbVMDv7L9PW1Apwd2ISIzyOjAzj0DBe+UQF4KzkgHcTAV9InEuqJc31ApuOQA==
+  dependencies:
+    tslib "^1.9.0"
+
 ngx-material-file-input@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ngx-material-file-input/-/ngx-material-file-input-2.0.0.tgz#ae94d9e79193015258ff1edb101b04c0b85a26da"

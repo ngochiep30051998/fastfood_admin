@@ -6,6 +6,14 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
+import { A11yModule } from '@angular/cdk/a11y';
+import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { BidiModule } from '@angular/cdk/bidi';
+import { ObserversModule } from '@angular/cdk/observers';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { PlatformModule } from '@angular/cdk/platform';
+import { PortalModule } from '@angular/cdk/portal';
+import { CdkTableModule } from '@angular/cdk/table';
 import { NgModule } from '@angular/core';
 import {
   MatAutocompleteModule,
@@ -22,32 +30,25 @@ import {
   MatIconModule,
   MatInputModule,
   MatListModule,
-  MatMenuModule,
-  MatPaginatorModule,
+  MatMenuModule, MatNativeDateModule, MatPaginatorModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
-  MatRadioModule,
-  MatSelectModule,
+  MatRadioModule, MatRippleModule, MatSelectModule,
   MatSidenavModule,
   MatSliderModule,
   MatSlideToggleModule,
   MatSnackBarModule,
   MatSortModule,
-  MatTableModule,
+
+
+
+
+  MatStepperModule, MatTableModule,
   MatTabsModule,
   MatToolbarModule,
-  MatTooltipModule,
-  MatStepperModule,
+  MatTooltipModule
 } from '@angular/material';
-import { MatNativeDateModule, MatRippleModule, } from '@angular/material';
-import { CdkTableModule } from '@angular/cdk/table';
-import { CdkAccordionModule } from '@angular/cdk/accordion';
-import { A11yModule } from '@angular/cdk/a11y';
-import { BidiModule } from '@angular/cdk/bidi';
-import { OverlayModule } from '@angular/cdk/overlay';
-import { PlatformModule } from '@angular/cdk/platform';
-import { ObserversModule } from '@angular/cdk/observers';
-import { PortalModule } from '@angular/cdk/portal';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 /**
@@ -97,7 +98,8 @@ import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
     PortalModule,
     MaterialFileInputModule,
     SatDatepickerModule,
-    SatNativeDateModule
+    SatNativeDateModule,
+    NgxMatSelectSearchModule
   ]
 })
 export class DemoMaterialModule { }

@@ -3,7 +3,6 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireStorage } from '@angular/fire/storage';
 import * as firebase from 'firebase';
 import { map } from 'rxjs/operators';
-import { BILL_STATUS } from '../../constants/constants';
 import { IBill } from '../../interfaces/bill.interface';
 import { IMenu } from '../../interfaces/menu.interfaces';
 import { IProduct } from '../../interfaces/products.interface';
@@ -281,4 +280,11 @@ export class FirebaseService {
     ).valueChanges();
   }
 
+  removeCat(catId) {
+    return this.db.object(`categories/${catId}`).remove();
+  }
+
+  createCat(cat) {
+    return this.db.list('categories').push(cat).then(res => res);
+  }
 }

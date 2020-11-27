@@ -3,13 +3,11 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DOC_ORIENTATION, NgxImageCompressService } from 'ngx-image-compress';
-import { FileValidator } from 'ngx-material-file-input';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { ICategories, IPopupData, IProduct } from '../../../interfaces/products.interface';
 import { FirebaseService } from '../../../services/firebase/firebase.service';
 import { HelperService } from '../../../services/helper/helper.service';
-import { finalize, tap } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-product',
@@ -28,7 +26,9 @@ export class AddProductComponent implements OnInit, OnDestroy {
     */
   readonly maxSize = 0.5 * 2 ** 20;
   private catSub$: Subscription;
-
+  private searchCatSub$: Subscription;
+  private listCat: ICategories[] = [];
+  public catName = '';
   constructor(
     public dialogRef: MatDialogRef<AddProductComponent>,
     private firebaseService: FirebaseService,
@@ -42,6 +42,11 @@ export class AddProductComponent implements OnInit, OnDestroy {
     this.initForm();
     this.catSub$ = this.firebaseService.getCategories().subscribe((res: any) => {
       this.categories = res;
+      this.listCat = res;
+      const catId = this.dialogData && this.dialogData.product && this.dialogData.product.catId;
+      if (catId) {
+        this.onSelectCat(catId);
+      }
     });
     this.patchValue();
   }
@@ -60,7 +65,8 @@ export class AddProductComponent implements OnInit, OnDestroy {
       promotionPrice: [''],
       unit: [''],
       photos: [undefined],
-      displayImage: [undefined]
+      displayImage: [undefined],
+      searchCat: ['']
     },
       {
         validators: this.helperService.MustLower('price', 'promotionPrice')
@@ -70,6 +76,10 @@ export class AddProductComponent implements OnInit, OnDestroy {
     //   this.form.get('photos').setValidators([Validators.required, FileValidator.maxContentSize(this.maxSize)])
     //   this.form.get('displayImage').setValidators([Validators.required, FileValidator.maxContentSize(this.maxSize)])
     // }
+
+    this.searchCatSub$ = this.form.get('searchCat').valueChanges.subscribe((val) => {
+      this.filterCat(val);
+    });
   }
 
   patchValue() {
@@ -253,6 +263,63 @@ export class AddProductComponent implements OnInit, OnDestroy {
       console.log(e);
     } finally {
       this.helperService.hideLoading();
+    }
+  }
+
+  async removeCat(cat: ICategories, index) {
+    try {
+      this.helperService.showLoading();
+      await this.firebaseService.removeCat(cat.key);
+      // this.categories.splice(index, 1);
+      this.toastr.success('Xóa thành công');
+    } catch (e) {
+      console.log(e);
+      this.toastr.error('Xóa thất bại');
+    } finally {
+      this.helperService.hideLoading();
+    }
+  }
+
+  filterCat(catName: string) {
+    const value = catName && catName.toLocaleUpperCase();
+    this.categories = this.listCat.filter(x => x.categoryName && x.categoryName.toLocaleUpperCase().includes(value))
+  }
+
+  async createCat(select?: boolean) {
+    try {
+      this.helperService.showLoading();
+      const index = this.listCat.findIndex(x => x.categoryName.toLocaleUpperCase().includes(this.form.value.searchCat.toLocaleUpperCase()));
+      if (index !== -1) {
+        throw {
+          mess: 'Loại món ăn đã tồn tại'
+        };
+      } else {
+        const cat = {
+          categoryName: this.form.value.searchCat
+        };
+        const res = await this.firebaseService.createCat(cat);
+        console.log(res.key);
+        if (select) {
+          this.form.get('category').setValue(res.key);
+          this.onSelectCat(res.key);
+        }
+        // this.form.get('searchCat').reset();
+        this.toastr.success('Thêm thành công');
+      }
+
+    } catch (e) {
+      console.log(e);
+      this.toastr.error(e.mess || 'Thêm thất bại');
+
+    } finally {
+      this.helperService.hideLoading();
+    }
+  }
+
+  onSelectCat(event) {
+    if (event) {
+      const cat = this.categories.find(x => x.key === event);
+      this.catName = cat && cat.categoryName ? cat.categoryName : '';
     }
   }
   ngOnDestroy(): void {

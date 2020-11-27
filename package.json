@@ -39,6 +39,7 @@
     "moment": "^2.25.3",
     "ng-chartist": "4.1.0",
     "ngx-image-compress": "^8.0.4",
+    "ngx-mat-select-search": "^3.1.4",
     "ngx-material-file-input": "2.0.0",
     "ngx-toastr": "11",
     "node-sass": "^4.13.1",

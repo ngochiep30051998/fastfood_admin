@@ -22,13 +22,30 @@
 
 
         </mat-grid-list>
-
         <mat-grid-list cols="2" rowHeight="80px">
             <mat-grid-tile>
                 <mat-form-field [hideRequiredMarker]="false">
                     <mat-label>Loại sản phẩm</mat-label>
-                    <mat-select placeholder="Loại sản phẩm" formControlName="category">
-                        <mat-option *ngFor="let cat of categories" [value]="cat?.key">{{cat?.categoryName}}
+                    <mat-select placeholder="Loại sản phẩm" formControlName="category" (valueChange)="onSelectCat($event)">
+
+                        <mat-select-trigger>
+                            <span>{{catName}}</span>
+                          </mat-select-trigger>
+                        <mat-option>
+                            <ngx-mat-select-search formControlName="searchCat" placeholderLabel="Loại món ăn"></ngx-mat-select-search>
+                          </mat-option>
+                        <mat-option *ngIf="form?.value?.searchCat">
+                            <div class="flex-between">
+                                <span>{{form?.value?.searchCat}} </span>
+                                <mat-icon class="pointer" style="padding-top: 11px;" (click)=" $event.stopPropagation(); createCat()">add_box</mat-icon>
+                            </div>
+                        </mat-option>
+
+                        <mat-option *ngFor="let cat of categories; let i = index" [value]="cat?.key" >
+                            <div class="flex-between">
+                                <span>{{cat?.categoryName}} </span>
+                                <mat-icon class="pointer" style="padding-top: 11px;" (click)=" $event.stopPropagation(); removeCat(cat,i)">close</mat-icon>
+                            </div>
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -48,13 +65,13 @@
                     <mat-label>Giá khuyến mại</mat-label>
                     <input appInputNumber matInput placeholder="Giá khuyến mại" type="number"
                         formControlName="promotionPrice">
-                        <mat-error *ngIf="form?.controls?.promotionPrice.touched 
+                    <mat-error *ngIf="form?.controls?.promotionPrice.touched 
                         && form?.controls?.promotionPrice?.invalid && 
                         form.controls.promotionPrice?.errors?.mustLower">
-                            Giá khuyến mại phải nhỏ hơn giá sản phẩm
-                        </mat-error>
+                        Giá khuyến mại phải nhỏ hơn giá sản phẩm
+                    </mat-error>
                 </mat-form-field>
-       
+
 
             </mat-grid-tile>
 
@@ -88,14 +105,14 @@
                 </div>
                 <button mat-icon-button (click)="removeDisplayImage()" type="button" color="warn" aria-label="xoá">
                     <mat-icon>delete</mat-icon>
-                  </button>
+                </button>
                 <!-- <button type="button" (click)="removeDisplayImage()">xoá</button> -->
             </div>
         </div>
 
         <mat-form-field>
-            <ngx-mat-file-input formControlName="photos" [accept]="'image/*'" placeholder="Ảnh chi tiết sản phẩm" multiple
-                (change)="onFileChange($event)">
+            <ngx-mat-file-input formControlName="photos" [accept]="'image/*'" placeholder="Ảnh chi tiết sản phẩm"
+                multiple (change)="onFileChange($event)">
             </ngx-mat-file-input>
             <mat-icon matSuffix>folder</mat-icon>
         </mat-form-field>
@@ -106,7 +123,7 @@
                 </div>
                 <button mat-icon-button (click)="removePhoto(i,url)" type="button" color="warn" aria-label="xoá">
                     <mat-icon>delete</mat-icon>
-                  </button>
+                </button>
             </div>
         </div>
 
