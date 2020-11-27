@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~saturn-datepicker/bundle.css';
 .form-container{
     display: flex;
     justify-content: flex-start;
@@ -125,10 +126,10 @@
       display: none;
     }
   
-    tbody {
-      display: block;
-      width: 100%;
-    }
+    // tbody {
+    //   display: block;
+    //   width: 100%;
+    // }
     
     .mat-table {
       background: transparent;
@@ -251,6 +252,3 @@
     font-size: 15px;
     padding-right: 10px;
   }
-
-  @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-  @import '~saturn-datepicker/bundle.css';

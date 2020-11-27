@@ -5751,10 +5751,10 @@ ngx-image-compress@^8.0.4:
   dependencies:
     tslib "^1.9.0"
 
-ngx-mat-select-search@^3.1.4:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/ngx-mat-select-search/-/ngx-mat-select-search-3.1.4.tgz#f948b7c934637eac16c44e390a82511e2dce3ade"
-  integrity sha512-yQPalWj8+K2SVZW7wlmknHlCdpbVMDv7L9PW1Apwd2ISIzyOjAzj0DBe+UQF4KzkgHcTAV9InEuqJc31ApuOQA==
+ngx-mat-select-search@1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/ngx-mat-select-search/-/ngx-mat-select-search-1.7.1.tgz#b362e4b62590b0f252a7d14cdacbe1bfc30c8bb3"
+  integrity sha512-oys3g/dbehXD0BG/zH9E1JwncROBXWUo6243YrVScvY9I/zFZT4sA2ClY1WALxc807Qvbq3Hs4TTLW/9BnLVSw==
   dependencies:
     tslib "^1.9.0"
 
@@ -7321,10 +7321,10 @@ sass@1.22.2:
   dependencies:
     chokidar ">=2.0.0 <4.0.0"
 
-saturn-datepicker@^8.0.1:
-  version "8.0.5"
-  resolved "https://registry.yarnpkg.com/saturn-datepicker/-/saturn-datepicker-8.0.5.tgz#3606b06769327aa286528173a9df47b4995f9b52"
-  integrity sha512-LEJftfa/mDNYFLdOZRETU4SEjXPtd5xve8hjyUHmxmc/znYD4PqBfS044+C1uekN4M92YZlsLUXWKmPKSdAQbg==
+saturn-datepicker@8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/saturn-datepicker/-/saturn-datepicker-8.0.1.tgz#8842dfd10eec7fa6529f059246170c29fee14367"
+  integrity sha512-kUmf8xg5oeGAZtgwqfkNY8Dro6EzX0zGIWnAcQ9cfQ+w3xBq4TbjdBUWuEA19rJlvLLP/uH3PAoXG/SHVLYncQ==
   dependencies:
     tslib "^1.9.0"
 

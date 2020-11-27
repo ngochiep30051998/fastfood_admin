@@ -18,7 +18,7 @@
             <input matInput [(ngModel)]="dateRange"
                    placeholder="Chọn ngày"
                    [satDatepicker]="orderdate" [max]="maxDate">
-            <sat-datepicker #orderdate [rangeMode]="true" [selectFirstDateOnClose]="true" [endDate]="1" [rangeHoverEffect]="true"   >
+            <sat-datepicker #orderdate [rangeMode]="true" [selectFirstDateOnClose]="true" [endDate]="1" >
             </sat-datepicker>
             <sat-datepicker-toggle matSuffix [for]="orderdate" ></sat-datepicker-toggle>
         </mat-form-field>
