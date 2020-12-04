@@ -1,18 +1,5 @@
 <div class="flex-container">
     <div class="condition">
-        <!-- <mat-form-field appearance="fill">
-            <mat-label>Chọn ngày bắt đầu</mat-label>
-            <input matInput [matDatepicker]="dp" [(ngModel)]="startDate">
-            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-            <mat-datepicker #dp></mat-datepicker>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-            <mat-label>Chọn ngày kết thúc</mat-label>
-            <input matInput [matDatepicker]="dp2" [(ngModel)]="endDate">
-            <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
-            <mat-datepicker #dp2></mat-datepicker>
-        </mat-form-field> -->
         <mat-form-field appearance="fill">
 
             <input matInput [(ngModel)]="dateRange"
@@ -40,81 +27,81 @@
     <mat-card-content>
         <table>
             <tr>
-                <td rowspan="2">Loại hoá đơn</td>
-                <td colspan="2">Hình thức thanh toán</td>
-                <td colspan="3">Trạng thái thanh toán</td>
-                <td colspan="2">Tổng tiền</td>
+                <td rowspan="2" class="txt-bold text-center">Loại hoá đơn</td>
+                <td colspan="2" class="txt-bold text-center">Hình thức thanh toán</td>
+                <td colspan="3" class="txt-bold text-center">Trạng thái thanh toán</td>
+                <td colspan="2" class="txt-bold text-center">Tổng tiền (đơn vị: vnđ)</td>
 
             </tr>
             <tr>
-                <td>Online</td>
-                <td>Tiền mặt</td>
-                <td>Đã thanh toán</td>
-                <td>Chưa thanh toán</td>
-                <td>Đã hoàn tiền</td>
-                <td>Đã thu</td>
-                <td>Chưa thu</td>
+                <td class="txt-bold text-center">Online</td>
+                <td class="txt-bold text-center">Tiền mặt</td>
+                <td class="txt-bold text-center">Đã thanh toán</td>
+                <td class="txt-bold text-center">Chưa thanh toán</td>
+                <td class="txt-bold text-center">Đã hoàn tiền</td>
+                <td class="txt-bold text-center">Đã thu</td>
+                <td class="txt-bold text-center">Chưa thu</td>
             </tr>
             <tr>
-                <td>Đã hoàn thành</td>
-                <td>{{(doneBill?.totalOnlinePayment || 0) |number}}</td>
-                <td>{{(doneBill?.offlinePayment || 0) |number}}</td>
-                <td>{{(doneBill?.paymentSuccess || 0) |number}}</td>
-                <td>{{(doneBill?.paymentPending || 0) |number}}</td>
-                <td>{{(doneBill?.paymentCanceled || 0) |number}}</td>
-                <td>{{(doneBill?.totalPrice || 0) |number}} vnđ</td>
-                <td>{{(doneBill?.totalPendingPrice || 0) |number}} vnđ</td>
+                <td class="txt-bold">Đã hoàn thành</td>
+                <td class="text-center">{{(doneBill?.totalOnlinePayment || 0) |number}}</td>
+                <td class="text-center">{{(doneBill?.offlinePayment || 0) |number}}</td>
+                <td class="text-center">{{(doneBill?.paymentSuccess || 0) |number}}</td>
+                <td class="text-center">{{(doneBill?.paymentPending || 0) |number}}</td>
+                <td class="text-center">{{(doneBill?.paymentCanceled || 0) |number}}</td>
+                <td class="text-center">{{(doneBill?.totalPrice || 0) |number}}</td>
+                <td class="text-center">{{(doneBill?.totalPendingPrice || 0) |number}}</td>
             </tr>
 
             <tr>
-                <td>Đang giao hàng</td>
-                <td>{{(transportBill?.totalOnlinePayment || 0) |number}}</td>
-                <td>{{(transportBill?.offlinePayment || 0) |number}}</td>
-                <td>{{(transportBill?.paymentSuccess || 0) |number}}</td>
-                <td>{{(transportBill?.paymentPending || 0) |number}}</td>
-                <td>{{(transportBill?.paymentCanceled || 0) |number}}</td>
-                <td>{{(transportBill?.totalPrice || 0) |number}} vnđ</td>
-                <td>{{(transportBill?.totalPendingPrice || 0) |number}} vnđ</td>
+                <td class="txt-bold">Đang giao hàng</td>
+                <td class="text-center">{{(transportBill?.totalOnlinePayment || 0) |number}}</td>
+                <td class="text-center">{{(transportBill?.offlinePayment || 0) |number}}</td>
+                <td class="text-center">{{(transportBill?.paymentSuccess || 0) |number}}</td>
+                <td class="text-center">{{(transportBill?.paymentPending || 0) |number}}</td>
+                <td class="text-center">{{(transportBill?.paymentCanceled || 0) |number}}</td>
+                <td class="text-center">{{(transportBill?.totalPrice || 0) |number}}</td>
+                <td class="text-center">{{(transportBill?.totalPendingPrice || 0) |number}}</td>
             </tr>
             <tr>
-                <td>Đã xác nhận</td>
-                <td>{{(acceptBill?.totalOnlinePayment || 0) |number}}</td>
-                <td>{{(acceptBill?.offlinePayment || 0) |number}}</td>
-                <td>{{(acceptBill?.paymentSuccess || 0) |number}}</td>
-                <td>{{(acceptBill?.paymentPending || 0) |number}}</td>
-                <td>{{(acceptBill?.paymentCanceled || 0) |number}}</td>
-                <td>{{(acceptBill?.totalPrice || 0) |number}} vnđ</td>
-                <td>{{(acceptBill?.totalPendingPrice || 0) |number}} vnđ</td>
+                <td class="txt-bold">Đã xác nhận</td>
+                <td class="text-center">{{(acceptBill?.totalOnlinePayment || 0) |number}}</td>
+                <td class="text-center">{{(acceptBill?.offlinePayment || 0) |number}}</td>
+                <td class="text-center">{{(acceptBill?.paymentSuccess || 0) |number}}</td>
+                <td class="text-center">{{(acceptBill?.paymentPending || 0) |number}}</td>
+                <td class="text-center">{{(acceptBill?.paymentCanceled || 0) |number}}</td>
+                <td class="text-center">{{(acceptBill?.totalPrice || 0) |number}}</td>
+                <td class="text-center">{{(acceptBill?.totalPendingPrice || 0) |number}}</td>
             </tr>
             <tr>
-                <td>Chưa xác nhận</td>
-                <td>{{(pendinglBill?.totalOnlinePayment || 0) |number}}</td>
-                <td>{{(pendinglBill?.offlinePayment || 0) |number}}</td>
-                <td>{{(pendinglBill?.paymentSuccess || 0) |number}}</td>
-                <td>{{(pendinglBill?.paymentPending || 0) |number}}</td>
-                <td>{{(pendinglBill?.paymentCanceled || 0) |number}}</td>
-                <td>{{(pendinglBill?.totalPrice || 0) |number}} vnđ</td>
-                <td>{{(pendinglBill?.totalPendingPrice || 0) |number}} vnđ</td>
+                <td class="txt-bold">Chưa xác nhận</td>
+                <td class="text-center">{{(pendinglBill?.totalOnlinePayment || 0) |number}}</td>
+                <td class="text-center">{{(pendinglBill?.offlinePayment || 0) |number}}</td>
+                <td class="text-center">{{(pendinglBill?.paymentSuccess || 0) |number}}</td>
+                <td class="text-center">{{(pendinglBill?.paymentPending || 0) |number}}</td>
+                <td class="text-center">{{(pendinglBill?.paymentCanceled || 0) |number}}</td>
+                <td class="text-center">{{(pendinglBill?.totalPrice || 0) |number}}</td>
+                <td class="text-center">{{(pendinglBill?.totalPendingPrice || 0) |number}}</td>
             </tr>
             <tr>
-                <td>Đã huỷ</td>
-                <td>{{(cancelBill?.totalOnlinePayment || 0) |number}}</td>
-                <td>{{(cancelBill?.offlinePayment || 0) |number}}</td>
-                <td>{{(cancelBill?.paymentSuccess || 0) |number}}</td>
-                <td>{{(cancelBill?.paymentPending || 0) |number}}</td>
-                <td>{{(cancelBill?.paymentCanceled || 0) |number}}</td>
-                <td>{{(cancelBill?.totalPrice || 0) |number}} vnđ</td>
-                <td>{{(cancelBill?.totalPendingPrice || 0) |number}} vnđ</td>
+                <td class="txt-bold">Đã huỷ</td>
+                <td class="text-center">{{(cancelBill?.totalOnlinePayment || 0) |number}}</td>
+                <td class="text-center">{{(cancelBill?.offlinePayment || 0) |number}}</td>
+                <td class="text-center">{{(cancelBill?.paymentSuccess || 0) |number}}</td>
+                <td class="text-center">{{(cancelBill?.paymentPending || 0) |number}}</td>
+                <td class="text-center">{{(cancelBill?.paymentCanceled || 0) |number}}</td>
+                <td class="text-center">{{(cancelBill?.totalPrice || 0) |number}}</td>
+                <td class="text-center">{{(cancelBill?.totalPendingPrice || 0) |number}}</td>
             </tr>
             <tr>
-                <td>Tổng</td>
-                <td>{{(data?.totalOnlinePayment || 0) |number}}</td>
-                <td>{{(data?.offlinePayment || 0) |number}}</td>
-                <td>{{(data?.paymentSuccess || 0) |number}}</td>
-                <td>{{(data?.paymentPending || 0) |number}}</td>
-                <td>{{(data?.paymentCanceled || 0) |number}}</td>
-                <td>{{(data?.totalPrice || 0) |number}} vnđ</td>
-                <td>{{(data?.totalPendingPrice || 0) |number}} vnđ</td>
+                <td class="txt-bold">Tổng</td>
+                <td class="text-center">{{(data?.totalOnlinePayment || 0) |number}}</td>
+                <td class="text-center">{{(data?.offlinePayment || 0) |number}}</td>
+                <td class="text-center">{{(data?.paymentSuccess || 0) |number}}</td>
+                <td class="text-center">{{(data?.paymentPending || 0) |number}}</td>
+                <td class="text-center">{{(data?.paymentCanceled || 0) |number}}</td>
+                <td class="text-center">{{(data?.totalPrice || 0) |number}}</td>
+                <td class="text-center">{{(data?.totalPendingPrice || 0) |number}}</td>
             </tr>
         </table>
     </mat-card-content>
@@ -127,7 +114,7 @@
             <mat-card-content class="chart-content">
                 <div class="d-flex flex-wrap">
                     <div>
-                        <mat-card-title>Biểu đồ doanh thu tiền mặt / thẻ tín dụng (đơn vị: nghìn vnđ)</mat-card-title>
+                        <mat-card-title class="txt-bold">Biểu đồ doanh thu tiền mặt / thẻ tín dụng (đơn vị: nghìn vnđ)</mat-card-title>
                         <!-- <mat-card-subtitle>Ample Admin Vs Material Admin</mat-card-subtitle> -->
                     </div>
                     <div class="ml-auto">

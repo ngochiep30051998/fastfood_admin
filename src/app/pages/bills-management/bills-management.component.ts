@@ -1,12 +1,13 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
+import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BILL_STATUS, PAYMENT_STATUS, TRANS_TYPE } from '../../constants/constants';
 import { IBill } from '../../interfaces/bill.interface';
 import { IPopupData } from '../../interfaces/products.interface';
 import { FirebaseService } from '../../services/firebase/firebase.service';
+import { HelperService } from '../../services/helper/helper.service';
 import { BillDetailComponent } from './bill-detail/bill-detail.component';
 
 @Component({
@@ -34,6 +35,7 @@ export class BillsManagementComponent implements OnInit, OnDestroy {
   constructor(
     private firebaseService: FirebaseService,
     public dialog: MatDialog,
+    public helperService: HelperService
   ) {
     this.getBills();
   }
@@ -43,15 +45,18 @@ export class BillsManagementComponent implements OnInit, OnDestroy {
   }
 
   getBills() {
+    this.helperService.showLoading();
     this.billSub$ = this.firebaseService.getBills().pipe(
       map(x => x.map((bill: any) => {
         return { ...bill, email: bill.user && bill.user.email };
       }))
     ).subscribe(res => {
-      console.log(res);
-      this.allData = res.reverse();
+      this.allData = res && res.reverse();
       this.listBill = Object.assign([], this.allData);
       this.dataSource.data = Object.assign([], this.allData);
+      this.helperService.hideLoading();
+    }, err => {
+      this.helperService.hideLoading();
     });
 
   }

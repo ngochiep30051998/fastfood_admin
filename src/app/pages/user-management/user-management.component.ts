@@ -40,6 +40,9 @@ export class UserManagementComponent implements OnInit {
 
   async getAllUser() {
     try {
+      setTimeout(() => {
+        this.helperService.showLoading();
+      }, 100);
       const res: any = await this.apiService.getAllUser();
       this.allData = res.data;
       this.listUser = Object.assign([], this.allData);
@@ -47,6 +50,8 @@ export class UserManagementComponent implements OnInit {
       console.log(res);
     } catch (e) {
       console.log(e);
+    } finally {
+      this.helperService.hideLoading();
     }
   }
 

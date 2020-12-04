@@ -4,6 +4,7 @@ import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/m
 import { Subscription } from 'rxjs';
 import { ICategories, IPopupData, IProduct } from '../../interfaces/products.interface';
 import { FirebaseService } from '../../services/firebase/firebase.service';
+import { HelperService } from '../../services/helper/helper.service';
 import { AddProductComponent } from './add-product/add-product.component';
 import { ModalDeleteProductComponent } from './modal-delete-product/modal-delete-product.component';
 
@@ -31,6 +32,7 @@ export class ProductManagementComponent implements OnInit, OnDestroy {
   constructor(
     private firebaseService: FirebaseService,
     public dialog: MatDialog,
+    public helperService: HelperService
   ) {
     this.getCategories();
   }
@@ -41,6 +43,7 @@ export class ProductManagementComponent implements OnInit, OnDestroy {
   }
 
   getCategories() {
+    this.helperService.showLoading();
     this.catSub$ = this.firebaseService.getCategories().subscribe(res => {
       this.categories = res;
       this.allData = res.reduce((accumulator, currentValue) => {
@@ -48,6 +51,9 @@ export class ProductManagementComponent implements OnInit, OnDestroy {
       }, []);
       this.listProduct = Object.assign([], this.allData);
       this.dataSource.data = Object.assign([], this.allData);
+      this.helperService.hideLoading();
+    }, err => {
+      this.helperService.hideLoading();
     });
   }
 

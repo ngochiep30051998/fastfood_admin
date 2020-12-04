@@ -1,13 +1,13 @@
 // import { Component, OnInit } from '@angular/core';
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as Chartist from 'chartist';
+import * as moment from 'moment';
 import { ChartEvent, ChartType } from 'ng-chartist';
 import { Subscription } from 'rxjs';
-import { FirebaseService } from '../../services/firebase/firebase.service';
-import { HelperService } from '../../services/helper/helper.service';
-import * as moment from 'moment';
 import { map } from 'rxjs/operators';
 import { BILL_STATUS, PAYMENT_STATUS, TRANS_TYPE } from '../../constants/constants';
+import { FirebaseService } from '../../services/firebase/firebase.service';
+import { HelperService } from '../../services/helper/helper.service';
 declare var require: any;
 
 
@@ -129,6 +129,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getData() {
+    this.helperService.showLoading();
     if (this.billSub$) {
       this.billSub$.unsubscribe();
     }
@@ -145,6 +146,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       console.log(this.allBills);
       this.initData();
       this.initChart();
+      this.helperService.hideLoading();
+    }, err => {
+      this.helperService.hideLoading();
     });
   }
 

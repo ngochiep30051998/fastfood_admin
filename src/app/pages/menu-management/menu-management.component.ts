@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DateAdapter, MatDialog } from '@angular/material';
-
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { IMenu } from '../../interfaces/menu.interfaces';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { CopyMenuComponent } from './copy-menu/copy-menu.component';
+
 
 @Component({
   selector: 'app-menu-management',
@@ -30,7 +30,6 @@ export class MenuManagementComponent implements OnInit, OnDestroy {
 
   getDate() {
     const date = moment(this.date).format('DD/MM/YYYY');
-    console.log(date)
   }
 
   changeDate() {
