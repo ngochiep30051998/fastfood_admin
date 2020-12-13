@@ -22,7 +22,7 @@
         <!-- Position Column -->
         <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Mã </th>
-            <td mat-cell *matCellDef="let element;" class='m-card-title'> {{element?.id}} </td>
+            <td mat-cell *matCellDef="let element;" class='m-card-title' (click)="$event.stopPropagation()"> {{element?.id}} </td>
         </ng-container>
 
         <!-- Name Column -->
