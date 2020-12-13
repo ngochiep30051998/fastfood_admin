@@ -26,8 +26,7 @@ export class FirebaseService {
   }
 
   getCategories() {
-    return this.db.list('/categories').snapshotChanges().pipe(map((snap: any) => {
-
+    return this.db.list('/categories',ref=>ref.orderByChild('date')).snapshotChanges().pipe(map((snap: any) => {
       return snap = snap.map((x: any) => {
 
         const data = {
@@ -193,7 +192,7 @@ export class FirebaseService {
   }
 
   getBills() {
-    return this.db.list(`bills/`).valueChanges();
+    return this.db.list(`bills/`,ref=> ref.orderByChild('date')).valueChanges();
   }
 
   getBillDetail(id) {
