@@ -48,6 +48,11 @@ export class CreateUserComponent implements OnInit {
       this.dialogRef.close(create);
     } catch (e) {
       console.log(e);
+      if (e && e.code === 'auth/email-already-exists') {
+        this.toastr.error('email đã tồn tại');
+      } else {
+        this.toastr.error('Không thể thêm mới, vui lòng kiểm tra lại thông tin');
+      }
       this.dialogRef.close(false);
     } finally {
       this.loading = false;
